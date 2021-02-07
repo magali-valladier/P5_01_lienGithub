@@ -1,13 +1,13 @@
-// CREATION DES 5 CARDS TEDDIES
+// BOUCLE CREATION DES 5 CARDS TEDDIES
 
-for (let i = 0; i < 5; i++) {
+for(let i = 0; i < 5; i++) {
     let cardDiv = document.createElement("div");
     cardDiv.classList.add("card-body", "mx-auto", "bg-info");
     let div = document.getElementById("card");
     div.appendChild(cardDiv);
 
 
-// INSERTION IMG DANS CARD BODY
+// INSERTION CONTENU DANS CARDS
     function Ours(colors,id,name,price,imageUrl) {
         this.colors = colors;
         this.id = id;
@@ -36,8 +36,17 @@ for (let i = 0; i < 5; i++) {
     let priceCard = document.createElement("p");
     cardDiv.appendChild(priceCard);
     priceCard.classList.add("card-text");
-    priceCard.textContent = bears[i].price;
-}
+    priceCard.textContent = bears[i].price + "€";
+
+    let buttonCard = document.createElement("button");
+    cardDiv.appendChild(buttonCard);
+    buttonCard.classList.add("btn", "btn-success");
+    buttonCard.setAttribute("type", "button");
+    buttonCard.textContent = "En savoir plus";    
+    }
+    button.addEventListener ("click", function() {
+        window.location.href = "product.html";
+      });
 // API REQUEST
 
 
