@@ -22,23 +22,25 @@ function getTeddies(teddies) {
         let priceCard = document.createElement("p");
         cardDiv.appendChild(priceCard);
         priceCard.classList.add("card-text");
-        priceCard.textContent = teddies[i].price + "€";
+        priceCard.textContent = (teddies[i].price/10) + "€";
 
         let buttonCard = document.createElement("button");
         cardDiv.appendChild(buttonCard);
-        buttonCard.classList.add("btn", "btn-success");
+        buttonCard.classList.add("btn", "btn-dark");
         buttonCard.setAttribute("type", "button");
-        buttonCard.textContent = "En savoir plus";    
+        buttonCard.textContent = "En savoir plus"; 
+        document.querySelector("button");
+        function url() {
+            
+            let getUrl = "?=" + teddies[i]._id; 
+            window.location.href = "product.html" + getUrl;
+           }
+          
+        buttonCard.addEventListener("click", url);
     }
-    } 
-    
+}
 
 
-
-
-    
-    
-      
 // API REQUEST
 const getAllTeddies = async function () {
     let response = await fetch("http://localhost:3000/api/teddies")
