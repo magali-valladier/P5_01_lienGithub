@@ -1,28 +1,24 @@
+const urlParams = new URLSearchParams(window.location.search)
+    let id = urlParams.get("id")
 
+// 5 CARDS CURL WITH FOR
 
 function getTeddies(teddies) {
-    let url = new URLSearchParams(window.location.search);
-    let idTeddy = url.get("id");
-    showTed(teddies, idTeddy);
+    
+     let ted = document.createElement("div");
+        ted.classList.add("ted", "bg-info", "rounded");
+        let div = document.getElementById("bear");
+        div.appendChild(ted);
+
+    let tedImg = document.createElement("img");
+    ted.appendChild(tedImg);
+    tedImg.src = id.imageUrl;
 }
-function showTed(teddies, idTed) {
-    let teddy = teddies.find(teddies => teddies["id"] == idTed);
-    console.log(teddy);
-
-}  
-
-let bears = document.createElement("div");
-    bears.classList.add("bg-info");
-    let div = document.getElementById("bear");
-    div.appendChild(bears);
-    bears.textContent = "je vais y arriver un jour ?";
-  
 
 
-let teddies;
 // API REQUEST WITH ASYNC FUNCTION
 const getAllTeddies = async function () {
-    let response = await fetch("http://localhost:3000/api/teddies")
+    let response = await fetch("http://localhost:3000/api/teddies/" + id)
     if (response.ok) {
        teddies = await response.json();
             getTeddies(teddies);

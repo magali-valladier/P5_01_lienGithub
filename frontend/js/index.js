@@ -34,7 +34,7 @@ function getTeddies(teddies) {
         function url() {
             
             let getUrl = "?id=" + teddies[i]._id; 
-            window.location.href = "frontend/product.html" + getUrl;
+            window.location.href = "./frontend/product.html" + getUrl;
            }
           
         buttonCard.addEventListener("click", url);
