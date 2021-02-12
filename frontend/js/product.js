@@ -40,9 +40,21 @@ cardDiv.appendChild(infoCard);
 infoCard.classList.add("card-title", "title", "mt-auto", "mb-auto", "pl-50");
 infoCard.textContent = myTeddy.description;
 
+let color = document.createElement("h4");
+cardDiv.appendChild(color);
+color.textContent = "Choisissez votre couleur:";
 
+let list = document.createElement("select");
+cardDiv.appendChild(list);
+let allColors = myTeddy.colors; 
+
+for(let i = 0; i < allColors.length; i++) {
+
+    let optionColor = document.createElement("option");
+    list.appendChild(optionColor);
+    optionColor.textContent = allColors[i];
+    }
 }
-
 let teddies;
 // RECUPERATION DE L'URL AVEC ID
 const getTed = async function () {
@@ -50,6 +62,7 @@ const getTed = async function () {
         if (response.ok) {
             let teddies = await response.json();
                createCard(teddies);
+               console.log(teddies);
         } else {
         console.error("Error", response.status)
     }
