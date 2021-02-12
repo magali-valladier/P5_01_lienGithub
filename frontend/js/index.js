@@ -1,6 +1,7 @@
-// 5 CARDS CURL WITH FOR
+// CREATION DE 5 CARDS POUR CHAQUE OURSON
 
-function getTeddies(teddies) {
+function createCard(teddies) {
+// UNE BOUCLE FOR POUR ITERER 5 CARDS PRINCIPALES
 
     for(let i = 0; i < teddies.length; i++) {
         
@@ -8,47 +9,57 @@ function getTeddies(teddies) {
         cardDiv.classList.add("card-body","bg-info", "rounded", "w-75", "mx-auto", "mb-3", "d-flex", "justify-content-around");
         let div = document.getElementById("card");
         div.appendChild(cardDiv);
-            
-        let imgCard = document.createElement("img");
-        cardDiv.appendChild(imgCard);
-        imgCard.classList.add("card-image-top", "rounded-circle", "w-25", "img-fluid");
-        imgCard.src = teddies[i].imageUrl;
-    
-        let titleCard = document.createElement("h3");
-        cardDiv.appendChild(titleCard);
-        titleCard.classList.add("card-title", "title", "mt-auto", "mb-auto", "pl-50");
-        titleCard.textContent = teddies[i].name;
 
-        let priceCard = document.createElement("p");
-        cardDiv.appendChild(priceCard);
-        priceCard.classList.add("card-text", "mt-auto", "mb-auto");
-        priceCard.textContent = (teddies[i].price/10) + "€";
+// 5 ITERATIONS DE CREATION DES ELEMENTS DES CARDS
 
-        let buttonCard = document.createElement("button");
-        cardDiv.appendChild(buttonCard);
-        buttonCard.classList.add("btn", "btn-dark", "mt-auto", "mb-auto");
-        buttonCard.setAttribute("type", "button");
-        buttonCard.textContent = "En savoir plus"; 
-        document.querySelector("button");
+    let imgCard = document.createElement("img");
+    cardDiv.appendChild(imgCard);
+    imgCard.classList.add("card-image-top", "rounded-circle", "w-25", "img-fluid");
+    imgCard.src = teddies[i].imageUrl;
 
-        function url() {
-            
-            let getUrl = "?id=" + teddies[i]._id; 
-            window.location.href = "./frontend/product.html" + getUrl;
-           }
-          
-        buttonCard.addEventListener("click", url);
+    let titleCard = document.createElement("h3");
+    cardDiv.appendChild(titleCard);
+    titleCard.classList.add("card-title", "title", "mt-auto", "mb-auto", "pl-50");
+    titleCard.textContent = teddies[i].name;
+
+    let priceCard = document.createElement("p");
+    cardDiv.appendChild(priceCard);
+    priceCard.classList.add("card-text", "mt-auto", "mb-auto");
+    priceCard.textContent = (teddies[i].price/10) + "€";
+
+// CREATION DU BOUTON LIEN VERS PAGE PRODUIT SIMPLE    
+
+    let buttonCard = document.createElement("button");
+    cardDiv.appendChild(buttonCard);
+    buttonCard.classList.add("btn", "btn-dark", "mt-auto", "mb-auto");
+    buttonCard.setAttribute("type", "button");
+    buttonCard.textContent = "En savoir plus"; 
+    document.querySelector("button");
+
+//IMPLEMENTATION D'UNE FONCTION DE RECUPERATION DE L'URL PAGE PRODUIT     
+
+    function url() {
+        
+        let getUrl = "?id=" + teddies[i]._id; 
+        window.location.href = "./frontend/product.html" + getUrl;
+       }
+       console.log(url);
+
+//ECOUTE DE L'EVENEMENT AU CLIC DU BOUTON       
+      
+    buttonCard.addEventListener("click", url);
     }
 }
-
+      
+   
 let teddies;
-// API REQUEST WITH ASYNC FUNCTION
+// RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
 const getAllTeddies = async function () {
     let response = await fetch("http://localhost:3000/api/teddies")
-    if (response.ok) {
-       teddies = await response.json();
-            getTeddies(teddies);
-    } else {
+        if (response.ok) {
+            let teddies = await response.json();
+                createCard(teddies);
+        } else {
         console.error("Error", response.status)
     }
 }
