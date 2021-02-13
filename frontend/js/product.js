@@ -89,14 +89,17 @@ for(let i = 0; i < allColors.length; i++) {
         let getUrl = "?id=" + myTeddy; 
         window.location.href = "cart.html" + getUrl;
        }
-       console.log(url);
+       
 
 //ECOUTE DE L'EVENEMENT AU CLIC DU BOUTON       
       
     buttonCard.addEventListener("click", url);
-    
+    buttonCard.onclick = function () {
+        alert("Article ajouté au panier !")
+    };
+    localStorage.setItem(idTeddy, JSON.stringify(idTeddy.name));  
     }
-  
+
 let teddies;
 // RECUPERATION DE L'URL AVEC ID
 const getTed = async function () {
