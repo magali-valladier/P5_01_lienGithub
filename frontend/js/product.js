@@ -37,24 +37,66 @@ priceCard.textContent = (myTeddy.price/10 + "€");
 
 let infoCard = document.createElement("p");
 cardDiv.appendChild(infoCard);
-infoCard.classList.add("card-title", "title", "mt-auto", "mb-auto", "pl-50");
+infoCard.classList.add("card-title","font-italic", "title", "mt-auto", "mb-auto", "pl-50");
 infoCard.textContent = myTeddy.description;
 
 let color = document.createElement("h4");
+color.classList.add("mt-5");
 cardDiv.appendChild(color);
-color.textContent = "Choisissez votre couleur:";
+color.textContent = "Choisissez votre couleur dans la liste:";
 
 let list = document.createElement("select");
 cardDiv.appendChild(list);
 let allColors = myTeddy.colors; 
 
+
+// CREATION D'UNE BOUCLE POUR CREER LES OPTIONS COULEUR
 for(let i = 0; i < allColors.length; i++) {
 
     let optionColor = document.createElement("option");
     list.appendChild(optionColor);
     optionColor.textContent = allColors[i];
     }
-}
+
+    let qty = document.createElement("h4");
+    qty.classList.add("mt-5");
+    cardDiv.appendChild(qty);
+    qty.textContent = "Quantité:";
+
+    let list2 = document.createElement("select");
+    cardDiv.appendChild(list2);
+
+
+// CREATION D'UNE BOUCLE POUR CREER LES OPTIONS QUANTITE
+    for(let i = 1; i < 5; i++) {
+
+        let optionQty = document.createElement("option");
+        list2.appendChild(optionQty);
+        optionQty.textContent = i;
+        }
+
+// CREATION DU BOUTON D'AJOUT DES PRODUITS AU PANIER
+
+    let buttonCard = document.createElement("button");
+    cardDiv.appendChild(buttonCard);
+    buttonCard.classList.add("addToCart", "btn", "btn-dark", "btn-block", "mt-5");
+    buttonCard.setAttribute("type", "button");
+    buttonCard.textContent = "Ajouter au panier"; 
+    document.querySelector("button");
+
+    function url() {
+        
+        let getUrl = "?id=" + myTeddy; 
+        window.location.href = "cart.html" + getUrl;
+       }
+       console.log(url);
+
+//ECOUTE DE L'EVENEMENT AU CLIC DU BOUTON       
+      
+    buttonCard.addEventListener("click", url);
+    
+    }
+  
 let teddies;
 // RECUPERATION DE L'URL AVEC ID
 const getTed = async function () {
@@ -62,7 +104,7 @@ const getTed = async function () {
         if (response.ok) {
             let teddies = await response.json();
                createCard(teddies);
-               console.log(teddies);
+              
         } else {
         console.error("Error", response.status)
     }
