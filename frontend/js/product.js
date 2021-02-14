@@ -97,6 +97,7 @@ for(let i = 0; i < allColors.length; i++) {
         alert("Article ajouté au panier !")
     };
     window.localStorage.setItem("name", JSON.stringify(myTeddy.name));
+    window.localStorage.setItem("price", JSON.stringify(myTeddy.price/10));
 }
 // CREATION D'UNE FONCTION AJOUT PANIER
 

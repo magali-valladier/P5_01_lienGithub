@@ -8,8 +8,11 @@ recap.textContent = "Récapitulatif : ";
 
 // CREATION D'UNE FONCTION POUR REMPLIR LE TABLEAU AVEC LE PRODUIT SELECTIONNE
 
-localStorage.getItem("name");  
-document.getElementsByClassName("bear").innerHTML = "name";  
+let productName = localStorage.getItem("name");  
+document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[0].innerHTML = productName;
+let productPrice = localStorage.getItem("price");  
+document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[1].innerHTML = productPrice/10;
+
 
     
 // CREATION DU FORMULAIRE DE COMMANDE
