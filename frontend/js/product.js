@@ -7,9 +7,7 @@ let idTeddy = urlSearch.get("id");
 function getTeddy(teddies, idTeddy) {
 
     let myTeddy = teddies.find(teddies => teddies["_id"] == idTeddy);
-    
-}
-
+}  
 // CREATION DE LA CARD PRINCIPALE CONTENANT LE PRODUIT
 function createCard(myTeddy, idTeddy) {
 
@@ -46,6 +44,7 @@ cardDiv.appendChild(color);
 color.textContent = "Choisissez votre couleur dans la liste:";
 
 let list = document.createElement("select");
+list.classList.add("colorList");
 cardDiv.appendChild(list);
 let allColors = myTeddy.colors; 
 
@@ -74,7 +73,7 @@ for(let i = 0; i < allColors.length; i++) {
         list2.appendChild(optionQty);
         optionQty.textContent = i;
         }
-
+    
 // CREATION DU BOUTON D'AJOUT DES PRODUITS AU PANIER
 
     let buttonCard = document.createElement("button");
@@ -97,8 +96,13 @@ for(let i = 0; i < allColors.length; i++) {
     buttonCard.onclick = function () {
         alert("Article ajouté au panier !")
     };
-    localStorage.setItem(idTeddy, JSON.stringify(idTeddy.name));  
-    }
+    window.localStorage.setItem("name", JSON.stringify(myTeddy.name));
+}
+// CREATION D'UNE FONCTION AJOUT PANIER
+
+
+
+
 
 let teddies;
 // RECUPERATION DE L'URL AVEC ID
@@ -112,6 +116,5 @@ const getTed = async function () {
         console.error("Error", response.status)
     }
 }
-
 // REACH API FUNCTION
 getTed()
