@@ -67,13 +67,16 @@ for(let i = 0; i < allColors.length; i++) {
 
 
 // CREATION D'UNE BOUCLE POUR CREER LES OPTIONS QUANTITE
+
+
     for(let i = 1; i < 5; i++) {
 
         let optionQty = document.createElement("option");
         list2.appendChild(optionQty);
         optionQty.textContent = i;
-        }
-    
+    } 
+
+
 // CREATION DU BOUTON D'AJOUT DES PRODUITS AU PANIER
 
     let buttonCard = document.createElement("button");
@@ -83,11 +86,14 @@ for(let i = 0; i < allColors.length; i++) {
     buttonCard.textContent = "Ajouter au panier"; 
     document.querySelector("button");
 
-    function url() {
+
+function url() {
         
-        let getUrl = "?id=" + myTeddy; 
-        window.location.href = "cart.html" + getUrl;
-       }
+    let getUrl = "?id=" + myTeddy; 
+    window.location.href = "cart.html" + getUrl;
+   }
+   console.log(url);
+       
        
 
 //ECOUTE DE L'EVENEMENT AU CLIC DU BOUTON       
@@ -96,19 +102,15 @@ for(let i = 0; i < allColors.length; i++) {
     buttonCard.onclick = function () {
         alert("Article ajouté au panier !")
     };
+
     window.localStorage.setItem("name", JSON.stringify(myTeddy.name));
     window.localStorage.setItem("price", JSON.stringify(myTeddy.price/10));
+    
 }
-// CREATION D'UNE FONCTION AJOUT PANIER
-
-
-
-
-
 let teddies;
 // RECUPERATION DE L'URL AVEC ID
 const getTed = async function () {
-    let response = await fetch("http://localhost:3000/api/teddies/" + idTeddy)
+    let response = await fetch("http://localhost:3000/api/teddies/"+ idTeddy)
         if (response.ok) {
             let teddies = await response.json();
                createCard(teddies);
