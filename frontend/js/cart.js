@@ -6,16 +6,34 @@ recap.classList.add("bg-dark", "text-white");
 cart.appendChild(recap);
 recap.textContent = "Récapitulatif : ";
 
-// CREATION D'UNE FONCTION POUR REMPLIR LE TABLEAU AVEC LE PRODUIT SELECTIONNE
+
+let list2 = document.createElement("select");
+
+
+
+// CREATION D'UNE BOUCLE POUR CREER LES OPTIONS QUANTITE
+let optionQty = document.createElement("option");
+
+for(let i = 1; i < 5; i++) {
+
+    list2.appendChild(optionQty);
+    optionQty.textContent = i;
+    
+    } 
+    
+
+
+// POUR REMPLIR LE TABLEAU AVEC LE PRODUIT SELECTIONNE
 
 let productName = localStorage.getItem("name");  
 document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[0].innerHTML = productName;
 let productPrice = localStorage.getItem("price");  
 document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[1].innerHTML = productPrice + "€";
 let total = localStorage.getItem("price");  
-document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[2].innerHTML = total + "€";
-document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[3].innerHTML = total + "€";
+document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[2].innerHTML = optionQty.value;
 
+
+document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[3].innerHTML = total + "€";
 
     
 // CREATION DU FORMULAIRE DE COMMANDE
@@ -28,7 +46,7 @@ document.getElementsByTagName("form");
 infoForm.classList.add("bg-dark", "text-white");
 formDiv.appendChild(infoForm);
 infoForm.textContent = "Remplissez le formulaire pour valider votre commande : ";
-let newForm = document.createElement("form", "d-block");
+let newForm = document.createElement("form");
 document.getElementById("cart");
 formDiv.appendChild(newForm);
 newForm.setAttribute("method", "post");
@@ -99,7 +117,14 @@ formGroup3.appendChild(inputCity);
 formGroup3.appendChild(labelCode);
 formGroup3.appendChild(inputCode);
 
-   
+function url() {
+        
+    let getUrl = "?" + "order"; 
+    window.location.href = "confirm.html" + getUrl;
+   }
+   console.log(url);
+   buttonForm.addEventListener("click", url);
+
 let teddies;
 // RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
 const getAllTeddies = async function () {

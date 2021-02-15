@@ -57,25 +57,7 @@ for(let i = 0; i < allColors.length; i++) {
     optionColor.textContent = allColors[i];
     }
 
-    let qty = document.createElement("h4");
-    qty.classList.add("mt-5");
-    cardDiv.appendChild(qty);
-    qty.textContent = "Quantité:";
-
-    let list2 = document.createElement("select");
-    cardDiv.appendChild(list2);
-
-
-// CREATION D'UNE BOUCLE POUR CREER LES OPTIONS QUANTITE
-
-
-    for(let i = 1; i < 5; i++) {
-
-        let optionQty = document.createElement("option");
-        list2.appendChild(optionQty);
-        optionQty.textContent = i;
-    } 
-
+    
 
 // CREATION DU BOUTON D'AJOUT DES PRODUITS AU PANIER
 
@@ -89,7 +71,7 @@ for(let i = 0; i < allColors.length; i++) {
 
 function url() {
         
-    let getUrl = "?id=" + myTeddy; 
+    let getUrl = "?" + "your\order" + "=" + myTeddy.name; 
     window.location.href = "cart.html" + getUrl;
    }
    console.log(url);
