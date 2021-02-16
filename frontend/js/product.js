@@ -80,9 +80,10 @@ cardDiv.appendChild(list2);
 for(let i = 1; i < 5; i++) {
 
     let optionQty = document.createElement("option");
+    list2.appendChild(optionQty);
     optionQty.setAttribute("value", i);
     optionQty.textContent = i;
-    list2.appendChild(optionQty);
+    
 } 
 
 let tedQty = document.getElementById("selectQty").value;
@@ -121,7 +122,7 @@ localStorage.setItem("selectedBear",JSON.stringify(infoBear));
 
 let teddies;
 // RECUPERATION DE L'URL AVEC ID
-const getTed = async function () {
+const getOneTeddy = async function () {
     let response = await fetch("http://localhost:3000/api/teddies/"+ idTeddy)
         if (response.ok) {
             let teddies = await response.json();
@@ -132,4 +133,4 @@ const getTed = async function () {
     }
 }
 // APPEL DE LA FONCTION API
-getTed()
+getOneTeddy()

@@ -10,7 +10,7 @@ recap.textContent = "Récapitulatif : ";
 
 let retrievedData = localStorage.getItem("selectedBear");
 let infoBear2 = JSON.parse(retrievedData);
-document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[0].innerHTML = infoBear2[0];
+document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[0].innerHTML = infoBear2[0] + " " + ": Couleur :" + " " + infoBear2[3];
 
 document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[1].innerHTML = infoBear2[2] + "€";
 
@@ -50,6 +50,9 @@ let inputName = document.createElement("input");
 inputName.setAttribute("name", "name");
 inputName.setAttribute("type", "text");
 inputName.classList.add("required");
+let span = document.createElement("span");
+span.id = "missingName";
+formGroup.appendChild(span);
 
 let formGroup2 = document.createElement("div");
 formGroup2.classList.add("form-group");
@@ -109,9 +112,10 @@ function zip(){
     }
 
 let buttonForm = document.createElement("button");
+    buttonForm.id = "submitBtn";
     newForm.appendChild(buttonForm);
     buttonForm.classList.add("btn", "btn-success");
-    buttonForm.setAttribute("type", "button");
+    buttonForm.setAttribute("type", "submit");
     buttonForm.textContent = "Valider ma commande"; 
     
 // pensez a prevent default pour empecher l'envoi de la page
@@ -126,6 +130,30 @@ formGroup3.appendChild(labelCity);
 formGroup3.appendChild(inputCity);
 formGroup3.appendChild(labelCode);
 formGroup3.appendChild(inputCode);
+
+// VERIFICATION DE LA VALIDATION DES DONNES DU FORMULAIRE
+
+let goodForm = document.getElementById("submitBtn");
+let nom = document.getElementsByName("name");
+let missingName = document.getElementById("missingName");
+let okName = /^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/;
+
+goodForm.addEventListener("click", validation);
+
+function validation(event) {
+    if (nom.validity.valueMissing) {
+        event.preventDefault();
+        missingName.textContent = "Renseignez ce champ";
+        missingName.style.color = "red";
+    } else if (okName.test(nom.value) == false) {
+        event.preventDefault();
+        missingName.textContent = "Renseignez un prénom";
+    } else {
+        
+    }
+}
+
+
 
 function url() {
         
