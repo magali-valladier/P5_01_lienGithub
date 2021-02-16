@@ -12,10 +12,10 @@ p2.textContent = " Prix total de votre commande :" + " " + localStorage.getItem(
 let p3 = document.createElement("p");
 document.createElement("p");
 div.appendChild(p3);
-p3.textContent = " Identifiant de  commande à conserver :";
+p3.textContent = " Identifiant de  commande à conserver : 454vd4g6q8g";
 
 
-
+// pour id commande voir random auto chiffre aleatoire
 let teddies;
 // RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
 const getAllTeddies = async function () {
