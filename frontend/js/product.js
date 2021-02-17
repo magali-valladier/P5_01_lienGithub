@@ -45,49 +45,27 @@ cardDiv.appendChild(color);
 color.textContent = "Choisissez votre couleur dans la liste:";
 
 let list = document.createElement("select");
-list.id = "select";
+list.id = "selectColor";
 list.setAttribute("name", "select");
 cardDiv.appendChild(list);
 let allColors = myTeddy.colors; 
+
 
 // CREATION D'UNE BOUCLE POUR CREER LES OPTIONS COULEUR
 
 for(let i = 0; i < allColors.length; i++) {
 
     let optionColor = document.createElement("option");
-    list.setAttribute("value", i);
-    optionColor.id = "option";
     list.appendChild(optionColor);
     optionColor.textContent = allColors[i];
-   
 }
-let tedColor = document.getElementById("select").value;
 
-// CREATION D'UNE LISTE QUANTITE
+let tedColor = document.getElementById("selectColor");
 
-let qty = document.createElement("h4");
-qty.classList.add("mt-5");
-cardDiv.appendChild(qty);
-qty.textContent = "Quantité :";
-
-// CREATION D'UNE BOUCLE POUR CREER LES OPTIONS QUANTITE
-
-let list2 = document.createElement("select");
-list2.id = "selectQty";
-list2.setAttribute("name", "select");
-cardDiv.appendChild(list2);
-
-for(let i = 1; i < 5; i++) {
-
-    let optionQty = document.createElement("option");
-    list2.appendChild(optionQty);
-    optionQty.setAttribute("value", i);
-    optionQty.textContent = i;
-    
-} 
-
-let tedQty = document.getElementById("selectQty").value;
-
+tedColor.addEventListener("change", function () {
+     
+    console.log(this.value);
+})                                               
 // CREATION DU BOUTON D'AJOUT DES PRODUITS AU PANIER
 
     let buttonCard = document.createElement("button");
@@ -104,11 +82,10 @@ function url() {
     let getUrl = "?" + "your\order" + "=" + myTeddy.name; 
     window.location.href = "cart.html" + getUrl;
 }
-   console.log(url);
 
 // CREATION D'UN ARRAY POUR LOCALSTORAGE
 
-let infoBear = [myTeddy.name, myTeddy._id, myTeddy.price/10, tedColor, tedQty];
+let infoBear = [myTeddy.name, myTeddy._id, myTeddy.price/10, tedColor.value];
 localStorage.setItem("selectedBear",JSON.stringify(infoBear));
 
 //ECOUTE DE L'EVENEMENT AU CLIC DU BOUTON ARTICLE AJOUTE      
@@ -118,8 +95,8 @@ localStorage.setItem("selectedBear",JSON.stringify(infoBear));
         alert("Article ajouté au panier !")
         event.preventDefault();
     };
-}
 
+}
 let teddies;
 // RECUPERATION DE L'URL AVEC ID
 const getOneTeddy = async function () {

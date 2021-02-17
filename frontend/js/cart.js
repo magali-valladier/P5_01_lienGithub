@@ -6,22 +6,21 @@ recap.classList.add("bg-dark", "text-white");
 cart.appendChild(recap);
 recap.textContent = "Récapitulatif : ";
 
+
 // POUR REMPLIR LE TABLEAU AVEC LE PRODUIT SELECTIONNE
 
 let retrievedData = localStorage.getItem("selectedBear");
 let infoBear2 = JSON.parse(retrievedData);
 document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[0].innerHTML = infoBear2[0] + " " + ": Couleur :" + " " + infoBear2[3];
-
 document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[1].innerHTML = infoBear2[2] + "€";
+let tedQty = document.getElementById("select");
 
-document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[2].innerHTML = infoBear2[4];
-
-document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[3].innerHTML = (infoBear2[4]*infoBear2[2]) + "€";
-
-
-
-// inserer au fur et mesure les select dans les ligne table 
-
+tedQty.addEventListener("change", function () {
+    index = this.value;
+    return index;
+ }); 
+ let qty = index.innerHTML;
+document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[3].innerHTML = (infoBear2[2]*2) + "€";
 
 // CREATION DU FORMULAIRE DE COMMANDE
 
@@ -153,7 +152,21 @@ function validation(event) {
     }
 }
 
+// FONCTION POST POUR ENVOI FORMULAIRE
 
+const sendForm = async function () {
+    let response = await fetch("http://localhost:3000/api/teddies/order", {
+        method: "post",
+        headers: {
+            "content-type": "application/json"
+        },
+    });
+        if (response.ok) {
+            window.location.href = "confirm.html";
+        } else {
+            console.error (response.status);
+        }
+   }
 
 function url() {
         
