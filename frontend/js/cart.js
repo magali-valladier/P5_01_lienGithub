@@ -1,32 +1,78 @@
+
+
 //STRUCTURE HTML DU PANIER
+function addCart(infobear) {
 
-let recap = document.createElement("h4");
-document.getElementById("cart");
-recap.classList.add("bg-dark", "text-white");
-cart.appendChild(recap);
-recap.textContent = "Récapitulatif : ";
+    let infoBear = JSON.parse(localStorage.getItem("selectedBear"));
 
+    let cartInfo = document.createElement("div");
+    cartInfo.classList.add("cartInfo", "bg-info");
+    document.getElementById("cart");
+    cart.appendChild(cartInfo);
 
-// POUR REMPLIR LE TABLEAU AVEC LE PRODUIT SELECTIONNE
+    let recap = document.createElement("h4");
+    document.getElementById("cartInfo");
+    recap.classList.add("bg-dark", "text-white");
+    cartInfo.appendChild(recap);
+    recap.textContent = "Récapitulatif : ";
 
-let retrievedData = localStorage.getItem("selectedBear");
-let infoBear2 = JSON.parse(retrievedData);
-document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[0].innerHTML = infoBear2[0] + " " + ": Couleur :" + " " + infoBear2[3];
-document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[1].innerHTML = infoBear2[2] + "€";
-let tedQty = document.getElementById("select");
+    let name = document.createElement("p");
+    name.innerHTML = infoBear[0];
+    cartInfo.appendChild(name);
 
-tedQty.addEventListener("change", function () {
-    index = this.value;
-    return index;
- }); 
- let qty = index.innerHTML;
-document.getElementsByTagName('table')[0].getElementsByTagName("tr")[1].cells[3].innerHTML = (infoBear2[2]*2) + "€";
+    let color = document.createElement("p");
+    color.innerHTML = infoBear[3];
+    cartInfo.appendChild(color);
+
+    let price = document.createElement("p");
+    price.innerHTML = infoBear[2] + "€";
+    cartInfo.appendChild(price);
+
+    let quantity = document.createElement("p");
+    cartInfo.appendChild(quantity);
+    quantity.textContent = "Quantité : ";
+
+    let qty = document.createElement("select");
+    qty.setAttribute("id", "select");
+    cartInfo.appendChild(qty);
+
+    for(let i = 1; i < 5; i++){
+
+        let optionQty = document.createElement("option");
+        optionQty.setAttribute("value", i);
+        select.appendChild(optionQty);
+        optionQty.textContent = i;
+    }
+
+    let tedQty = document.getElementById("select");
+
+    tedQty.addEventListener("change", function cart(result) {
+
+        result = this.value;
+          console.log(result);
+
+       }); 
+
+       let qtyTed = cart (result);
+    // infoBear.push(qty);
+    //  localStorage.setItem("selectedBear",JSON.stringify(qty));
+
+    let totalPrice = document.createElement("p");
+    cartInfo.appendChild(totalPrice);
+    totalPrice.innerHTML = infoBear[2] + "€";
+    let deleteBtn = document.createElement("button");
+    deleteBtn.innerHTML = "Supprimer";
+    deleteBtn.setAttribute("data-id", infoBear[2]);
+    cartInfo.appendChild(deleteBtn);
+}
+
+addCart()
 
 // CREATION DU FORMULAIRE DE COMMANDE
 
 let formDiv = document.createElement("div");
 formDiv.classList.add("bg-info");
-table.appendChild(formDiv);
+cart.appendChild(formDiv);
 let infoForm = document.createElement("h4");
 document.getElementsByTagName("form");
 infoForm.classList.add("bg-dark", "text-white");
@@ -38,7 +84,7 @@ formDiv.appendChild(newForm);
 newForm.setAttribute("method", "post");
 
 let formGroup = document.createElement("div");
-formGroup.classList.add("form-group");
+formGroup.classList.add("form-group", "d-flex", "justify-content-center");
 document.getElementsByTagName("form");
 newForm.appendChild(formGroup);
 
@@ -54,12 +100,12 @@ span.id = "missingName";
 formGroup.appendChild(span);
 
 let formGroup2 = document.createElement("div");
-formGroup2.classList.add("form-group");
+formGroup2.classList.add("form-group", "d-flex", "justify-content-center");
 document.getElementsByTagName("form");
 newForm.appendChild(formGroup2);
 let labelMail = document.createElement("label");
 labelMail.setAttribute("for", "mail");
-labelMail.textContent = "Votre email";
+labelMail.textContent = "Votre email :";
 let inputMail = document.createElement("input");
 inputMail.setAttribute("name", "mail");
 inputMail.classList.add("required");
@@ -69,7 +115,7 @@ erreur.classList.add("error");
 document.getElementsByClassName("error").innerHTML = "Merci de saisir un email valide";
 
 let formGroup3 = document.createElement("div");
-formGroup3.classList.add("form-group");
+formGroup3.classList.add("form-group", "d-flex", "justify-content-center");
 document.getElementsByTagName("form");
 newForm.appendChild(formGroup3);
 let labelAddress = document.createElement("label");
@@ -113,7 +159,7 @@ function zip(){
 let buttonForm = document.createElement("button");
     buttonForm.id = "submitBtn";
     newForm.appendChild(buttonForm);
-    buttonForm.classList.add("btn", "btn-success");
+    buttonForm.classList.add("btn", "btn-success", "btn-block");
     buttonForm.setAttribute("type", "submit");
     buttonForm.textContent = "Valider ma commande"; 
     
@@ -173,7 +219,7 @@ function url() {
     let getUrl = "?" + "order"; 
     window.location.href = "confirm.html" + getUrl;
    }
-   console.log(url);
+ 
    buttonForm.addEventListener("click", url);
 
 let teddies;
@@ -182,7 +228,7 @@ const getAllTeddies = async function () {
     let response = await fetch("http://localhost:3000/api/teddies")
         if (response.ok) {
             let teddies = await response.json();
-                console.log(teddies);
+               
         } else {
         console.error("Error", response.status)
     }

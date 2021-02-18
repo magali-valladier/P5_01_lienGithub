@@ -73,30 +73,32 @@ tedColor.addEventListener("change", function () {
     buttonCard.classList.add("addToCart", "btn", "btn-dark", "btn-block", "mt-5");
     buttonCard.setAttribute("type", "button");
     buttonCard.textContent = "Ajouter au panier"; 
-    document.querySelector("button");
 
-// CREATION D'UNE FONCTION DE LIEN VERS PAGE PANIER
 
-function url() {
-        
-    let getUrl = "?" + "your\order" + "=" + myTeddy.name; 
-    window.location.href = "cart.html" + getUrl;
-}
-
-// CREATION D'UN ARRAY POUR LOCALSTORAGE
-
-let infoBear = [myTeddy.name, myTeddy._id, myTeddy.price/10, tedColor.value];
-localStorage.setItem("selectedBear",JSON.stringify(infoBear));
-
+    let addCart = document.querySelector("button");
+    addCart.addEventListener("click", function(e) {
+    let infoBear = [myTeddy.name, myTeddy._id, myTeddy.price/10, tedColor.value];
+    
+   let addTeddy = localStorage.getItem(myTeddy);
+    if(addTeddy) {
+        inCart = JSON.parse(addTeddy);
+        inCart.push(infoBear);
+        localStorage.setItem("selectedBear",JSON.stringify(infoBear));
+    } else {
+        inCart = [];
+        inCart.push(myTeddy, JSON.stringify(inCart));
+        localStorage.setItem("selectedBear",JSON.stringify(infoBear));
+    }
+})
 //ECOUTE DE L'EVENEMENT AU CLIC DU BOUTON ARTICLE AJOUTE      
       
-    buttonCard.addEventListener("click", url);
     buttonCard.onclick = function (event) {
+        
         alert("Article ajouté au panier !")
         event.preventDefault();
     };
-
 }
+
 let teddies;
 // RECUPERATION DE L'URL AVEC ID
 const getOneTeddy = async function () {
