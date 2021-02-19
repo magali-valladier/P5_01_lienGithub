@@ -55,7 +55,9 @@ function createCard(teddies) {
 let teddies;
 // RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
 const getAllTeddies = async function () {
-    let response = await fetch("http://localhost:3000/api/teddies", {mode: 'cors'})
+    let response = await fetch("http://localhost:3000/api/teddies", {
+    mode: "cors"
+})
         if (response.ok) {
             let teddies = await response.json();
                 createCard(teddies);

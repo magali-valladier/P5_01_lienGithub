@@ -26,7 +26,7 @@ let infoBear2 = JSON.parse(retrievedData);
     cartInfo.appendChild(color);
 
     let price = document.createElement("p");
-    price.innerHTML = infoBear2[2] + "€";
+    price.innerHTML = infoBear2[2] +"€";
     cartInfo.appendChild(price);
 
     let quantity = document.createElement("p");
@@ -47,20 +47,23 @@ let infoBear2 = JSON.parse(retrievedData);
 
     let tedQty = document.getElementById("select");
 
-    tedQty.addEventListener("change", function () {
+    tedQty.addEventListener("change", function choice () {
 
-        result = this.value;
-          console.log(result);
-
+        let ttcPrice = this.value;
+        document.getElementsByClassName("totalPrice");
+        totalPrice.innerHTML = infoBear2[2] * ttcPrice + "€";
+        
        }); 
-
+      
+    
     let priceTitle = document.createElement("p");
     cartInfo.appendChild(priceTitle);
     priceTitle.textContent = "Prix total : ";
 
     let totalPrice = document.createElement("p");
+    totalPrice.classList.add("totalPrice");
     cartInfo.appendChild(totalPrice);
-    totalPrice.innerHTML = infoBear2[2] + "€";
+    totalPrice.innerHTML = infoBear2[2] +  "€";
     let deleteBtn = document.createElement("button");
     deleteBtn.innerHTML = "Supprimer";
     deleteBtn.setAttribute("data-id", infoBear2[2]);
@@ -127,6 +130,22 @@ inputAddress.setAttribute("type", "text");
 labelAddress.textContent = "N° de rue / avenue ...";
 inputAddress.classList.add("required");
 
+function mel(){
+    let mail = document.getElementsByTagName('input')[2].value;
+    let regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    if(regex.mail == false){
+    alert("Merci de saisir un email valide");
+    return false;
+    }
+    if(mel == " "){
+    alert("Champ manquant");
+    return false;
+    }
+    return true;
+    }
+
+
+
 let labelCity = document.createElement("label");
 labelCity.setAttribute("for", "city");
 let inputCity = document.createElement("input");
@@ -147,7 +166,7 @@ function zip(){
     let zipCode = document.getElementsByTagName('input')[5].value;
     let regex = /^(?:[0-8]\\d|9[0-8])\\d{3}$/;
     if(regex.zipCode == false){
-    alert("Merci de sasir un code postal valide");
+    alert("Merci de saisir un code postal valide");
     return false;
     }
     if(zipCode == " "){

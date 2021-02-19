@@ -89,7 +89,9 @@ tedColor.addEventListener("change", function () {
 let teddies;
 // RECUPERATION DE L'URL AVEC ID
 const getOneTeddy = async function () {
-    let response = await fetch("http://localhost:3000/api/teddies/"+ idTeddy, {mode: 'cors'})
+    let response = await fetch("http://localhost:3000/api/teddies/"+ idTeddy, {
+        mode: 'cors'
+    })
         if (response.ok) {
             let teddies = await response.json();
                createCard(teddies);
