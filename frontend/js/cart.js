@@ -1,9 +1,10 @@
 
-
 //STRUCTURE HTML DU PANIER
 function addCart(infobear) {
 
-    let infoBear = JSON.parse(localStorage.getItem("selectedBear"));
+    let retrievedData = localStorage.getItem("selectedBear");
+let infoBear2 = JSON.parse(retrievedData);
+
 
     let cartInfo = document.createElement("div");
     cartInfo.classList.add("cartInfo", "bg-info");
@@ -17,15 +18,15 @@ function addCart(infobear) {
     recap.textContent = "Récapitulatif : ";
 
     let name = document.createElement("p");
-    name.innerHTML = infoBear[0];
+    name.innerHTML = infoBear2[0];
     cartInfo.appendChild(name);
 
     let color = document.createElement("p");
-    color.innerHTML = infoBear[3];
+    color.innerHTML = infoBear2[3];
     cartInfo.appendChild(color);
 
     let price = document.createElement("p");
-    price.innerHTML = infoBear[2] + "€";
+    price.innerHTML = infoBear2[2] + "€";
     cartInfo.appendChild(price);
 
     let quantity = document.createElement("p");
@@ -46,23 +47,23 @@ function addCart(infobear) {
 
     let tedQty = document.getElementById("select");
 
-    tedQty.addEventListener("change", function cart(result) {
+    tedQty.addEventListener("change", function () {
 
         result = this.value;
           console.log(result);
 
        }); 
 
-       let qtyTed = cart (result);
-    // infoBear.push(qty);
-    //  localStorage.setItem("selectedBear",JSON.stringify(qty));
+    let priceTitle = document.createElement("p");
+    cartInfo.appendChild(priceTitle);
+    priceTitle.textContent = "Prix total : ";
 
     let totalPrice = document.createElement("p");
     cartInfo.appendChild(totalPrice);
-    totalPrice.innerHTML = infoBear[2] + "€";
+    totalPrice.innerHTML = infoBear2[2] + "€";
     let deleteBtn = document.createElement("button");
     deleteBtn.innerHTML = "Supprimer";
-    deleteBtn.setAttribute("data-id", infoBear[2]);
+    deleteBtn.setAttribute("data-id", infoBear2[2]);
     cartInfo.appendChild(deleteBtn);
 }
 
@@ -197,30 +198,32 @@ function validation(event) {
         
     }
 }
-
+let contact = {
+name: inputName.value,
+address: inputAddress.value,
+city: inputCity.value,
+zip: inputCode.value,
+mail: inputMail.value,
+}
 // FONCTION POST POUR ENVOI FORMULAIRE
 
 const sendForm = async function () {
     let response = await fetch("http://localhost:3000/api/teddies/order", {
         method: "post",
+        
         headers: {
             "content-type": "application/json"
         },
-    });
+        mode: "cors",
+        body: JSON.stringify({contact, infoBear})
+    })
+    
         if (response.ok) {
             window.location.href = "confirm.html";
         } else {
             console.error (response.status);
         }
-   }
-
-function url() {
-        
-    let getUrl = "?" + "order"; 
-    window.location.href = "confirm.html" + getUrl;
-   }
- 
-   buttonForm.addEventListener("click", url);
+   };
 
 let teddies;
 // RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
