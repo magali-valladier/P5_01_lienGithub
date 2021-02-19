@@ -62,10 +62,15 @@ for(let i = 0; i < allColors.length; i++) {
 
 let tedColor = document.getElementById("selectColor");
 
-tedColor.addEventListener("change", function () {
+tedColor.addEventListener("change", function choiceColor() {
      
-    console.log(this.value);
-})                                               
+    choosenColor = this.value;
+        let color = localStorage.setItem("tedColor", JSON.stringify(choosenColor));
+        console.log(choosenColor);
+})                        
+
+let infoBear = [myTeddy.name, myTeddy._id, myTeddy.price/10, tedColor.value];
+localStorage.setItem("selectedBear", JSON.stringify(infoBear));
 // CREATION DU BOUTON D'AJOUT DES PRODUITS AU PANIER
 
     let buttonCard = document.createElement("button");
@@ -75,8 +80,7 @@ tedColor.addEventListener("change", function () {
     buttonCard.textContent = "Ajouter au panier"; 
     document.querySelector("button");
     
-    let infoBear = [myTeddy.name, myTeddy._id, myTeddy.price/10, tedColor.value];
-  localStorage.setItem("selectedBear", JSON.stringify(infoBear));
+   
 //ECOUTE DE L'EVENEMENT AU CLIC DU BOUTON ARTICLE AJOUTE      
       
     buttonCard.onclick = function (event) {

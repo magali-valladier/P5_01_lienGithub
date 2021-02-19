@@ -4,7 +4,7 @@ function addCart(infobear) {
 
     let retrievedData = localStorage.getItem("selectedBear");
 let infoBear2 = JSON.parse(retrievedData);
-
+let colorTed = localStorage.getItem("tedColor");
 
     let cartInfo = document.createElement("div");
     cartInfo.classList.add("cartInfo", "bg-info");
@@ -22,7 +22,7 @@ let infoBear2 = JSON.parse(retrievedData);
     cartInfo.appendChild(name);
 
     let color = document.createElement("p");
-    color.innerHTML = infoBear2[3];
+    color.innerHTML = colorTed;
     cartInfo.appendChild(color);
 
     let price = document.createElement("p");
