@@ -12,7 +12,7 @@ p.textContent = " Nous vous remercions de votre confiance. Vous trouverez ci-joi
 let p2 = document.createElement("p");
 document.createElement("p");
 div.appendChild(p2);
-p2.textContent = " Prix total de votre commande :" + " " + (infoBear2[4]*infoBear2[2]) + "€";
+p2.textContent = " Prix total de votre commande :" + " " + (infoBear2[4]*ttcPrice) + "€";
 let p3 = document.createElement("p");
 document.createElement("p");
 div.appendChild(p3);
@@ -38,6 +38,7 @@ const getAllTeddies = async function () {
         console.error("Error", response.status)
     }
 }
+
 
 // REACH API FUNCTION
 getAllTeddies()
