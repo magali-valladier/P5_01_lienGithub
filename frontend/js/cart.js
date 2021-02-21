@@ -1,7 +1,8 @@
 
 //STRUCTURE HTML DU PANIER
-function addCart(infobear2) {
+function addCart() {
 
+   
     let retrievedData = localStorage.getItem("selectedBear");
 let infoBear2 = JSON.parse(retrievedData);
 let colorTed = localStorage.getItem("tedColor");
@@ -45,6 +46,7 @@ let colorTed = localStorage.getItem("tedColor");
         optionQty.textContent = i;
     }
 
+// CREATION D'UNE FONCTION D'ECOUTE DU CHANGEMENT DE LA QUANTITE POUR CALCUL PRIX TOTAL
     let tedQty = document.getElementById("select");
 
     tedQty.addEventListener("change", function choice () {
@@ -53,6 +55,7 @@ let colorTed = localStorage.getItem("tedColor");
         document.getElementsByClassName("totalPrice");
         totalPrice.innerHTML = infoBear2[2] * ttcPrice + "€";
         price.innerHTML = "0€";
+        localStorage.setItem("price", ttcPrice);  
        }); 
       
     
@@ -70,6 +73,7 @@ let colorTed = localStorage.getItem("tedColor");
     deleteBtn.innerHTML = "Vider mon panier";
     cartInfo.appendChild(deleteBtn);
 
+//CREATION DU BOUTON SUPPRIMER MON PANIER
 
 document.getElementsByClassName("deleteBtn");
 deleteBtn.onclick = function (event) {
@@ -94,6 +98,7 @@ infoForm.classList.add("bg-dark", "text-white");
 formDiv.appendChild(infoForm);
 infoForm.textContent = "Remplissez le formulaire pour valider votre commande : ";
 let newForm = document.createElement("form");
+newForm.id = "form";
 document.getElementById("cart");
 formDiv.appendChild(newForm);
 newForm.setAttribute("method", "post");
@@ -182,22 +187,20 @@ let buttonForm = document.createElement("button");
     buttonForm.id = "submitBtn";
     newForm.appendChild(buttonForm);
     buttonForm.classList.add("btn", "btn-success", "btn-block");
-    buttonForm.setAttribute("type", "submit");
+    buttonForm.setAttribute("type", "button");
     buttonForm.textContent = "Valider ma commande"; 
     
-    // CREATION DE L'OBJECT CONTACT POUR ENVOI DONNEES FORMULAIRE
+// CREATION DE L'OBJECT CONTACT POUR ENVOI DONNEES FORMULAIRE
 
-    let contact = {
-    name: inputName.value,
-    address: inputAddress.value,
-    city: inputCity.value,
-    zip: inputCode.value,
-    mail: inputMail.value,
+    const contact = {
+        allName: inputName.value,
+        mail: inputMail.value,
+        address: inputAddress.value,
+        city: inputCity.value,
+        zip: inputCode.value,        
     }
-    buttonForm.addEventListener("click", contact);
-
    
-
+   
 // VERIFICATION DE LA VALIDATION DES DONNES DU FORMULAIRE
 
 let goodForm = document.getElementById("submitBtn");
@@ -211,27 +214,27 @@ function zip(){
     if(regex.zipCode == false){
     alert("Merci de saisir un code postal valide");
     return false;
-    }
-    if(zipCode == " "){
+    } else if(zipCode == " "){
     alert("Champ manquant");
     return false;
-    }
+    } else {
     return true;
     }
-
+}
     function mel(){
         let mail = document.getElementsByTagName('input')[2].value;
-        let regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+        let regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
         if(regex.mail == false){
         alert("Merci de saisir un email valide");
         return false;
-        }
-        if(mel == " "){
+        } else if(mel == " "){
         alert("Champ manquant");
         return false;
-        }
+        } else {
         return true;
         }
+    }
+
 goodForm.addEventListener("click",function (zip, mel,){
     window.location.href = "confirm.html";
 });
@@ -246,8 +249,8 @@ const sendForm = async function (contact, infoBear) {
             "content-type": "application/json"
         },
         mode: "cors",
-        body: contact, infoBear
-    })
+        body: JSON.stringify(contact, infoBear),
+    });
     
         if (response.ok) {
             window.location.href = "confirm.html";

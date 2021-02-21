@@ -1,5 +1,9 @@
 let retrievedData = localStorage.getItem("selectedBear");
 let infoBear2 = JSON.parse(retrievedData);
+let data = localStorage.getItem("price");
+let total = JSON.parse(data);
+
+console.log(data);
 
 const div = document.createElement("div");
 div.classList.add("bg-success");
@@ -12,7 +16,7 @@ p.textContent = " Nous vous remercions de votre confiance. Vous trouverez ci-joi
 let p2 = document.createElement("p");
 document.createElement("p");
 div.appendChild(p2);
-p2.textContent = " Prix total de votre commande :" + " " + (infoBear2[4]*ttcPrice) + "€";
+p2.textContent = " Prix total de votre commande :" + infoBear2[2]*total + "€";
 let p3 = document.createElement("p");
 document.createElement("p");
 div.appendChild(p3);

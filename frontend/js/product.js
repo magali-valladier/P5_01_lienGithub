@@ -69,13 +69,6 @@ tedColor.addEventListener("change", function choiceColor() {
         console.log(choosenColor);
 })                        
 
-const ted = {
-    name: myTeddy.name,
-    id: myTeddy.name + tedColor.value,
-    price: myTeddy.price/10,
-    color:tedColor.value,
-};
-
 // CREATION DU BOUTON D'AJOUT DES PRODUITS AU PANIER
 
     let buttonCard = document.createElement("button");
@@ -85,16 +78,31 @@ const ted = {
     buttonCard.textContent = "Ajouter au panier"; 
     document.querySelector("button");
     
-    let infoBear = [myTeddy.name, myTeddy._id, myTeddy.price/10, tedColor.value];
-    localStorage.setItem("selectedBear", JSON.stringify(infoBear));   
+    
+
 //ECOUTE DE L'EVENEMENT AU CLIC DU BOUTON ARTICLE AJOUTE      
-      
-buttonCard.onclick = function (event) {
-        
-    alert("Article ajouté au panier !")
+    
+
+buttonCard.addEventListener("click", function(event) {
+    
+    let infoBear = [myTeddy.name, myTeddy._id, myTeddy.price/10, tedColor.value]; 
+    localStorage.setItem("selectedBear", JSON.stringify(infoBear));  
+   
+    if(localStorage.length > 0) {
+        for(let i = 0; i < localStorage.length; i++) {
+
+            infoBear = JSON.parse(localStorage.getItem("selectedBear"));
+            infoBear.push(teddies);
+            console.log(myTeddy);
+            
+        }
+    }
+    alert("Article ajouté au panier !");
     event.preventDefault();
+
+})
+
 };
-}
 
 let teddies;
 // RECUPERATION DE L'URL AVEC ID
