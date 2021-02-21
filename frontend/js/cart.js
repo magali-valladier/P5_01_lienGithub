@@ -1,10 +1,10 @@
-
+let retrievedData = localStorage.getItem("selectedBear");
+let infoBear2 = JSON.parse(retrievedData);
 //STRUCTURE HTML DU PANIER
 function addCart() {
 
    
-    let retrievedData = localStorage.getItem("selectedBear");
-let infoBear2 = JSON.parse(retrievedData);
+
 let colorTed = localStorage.getItem("tedColor");
 
     let cartInfo = document.createElement("div");
@@ -14,20 +14,20 @@ let colorTed = localStorage.getItem("tedColor");
 
     let recap = document.createElement("h4");
     document.getElementById("cartInfo");
-    recap.classList.add("bg-dark", "text-white");
+    recap.classList.add("bg-dark","text-center", "text-white");
     cartInfo.appendChild(recap);
     recap.textContent = "Récapitulatif : ";
 
     let name = document.createElement("p");
-    name.innerHTML = infoBear2[0];
+    name.innerHTML = "Nom de l'article : " + infoBear2[0];
     cartInfo.appendChild(name);
 
     let color = document.createElement("p");
-    color.innerHTML = colorTed;
+    color.innerHTML = "Couleur l'article : " + colorTed;
     cartInfo.appendChild(color);
 
     let price = document.createElement("p");
-    price.innerHTML = infoBear2[2] +"€";
+    price.innerHTML = "Prix unitaire : " + infoBear2[2] +"€";
     cartInfo.appendChild(price);
 
     let quantity = document.createElement("p");
@@ -69,7 +69,7 @@ let colorTed = localStorage.getItem("tedColor");
     totalPrice.innerHTML = infoBear2[2] +  "€";
     
     let deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("deleteBtn", "btn", "btn-dark");
+    deleteBtn.classList.add("deleteBtn", "btn", "btn-dark", "mb-3");
     deleteBtn.innerHTML = "Vider mon panier";
     cartInfo.appendChild(deleteBtn);
 
@@ -94,7 +94,7 @@ formDiv.classList.add("bg-info");
 cart.appendChild(formDiv);
 let infoForm = document.createElement("h4");
 document.getElementsByTagName("form");
-infoForm.classList.add("bg-dark", "text-white");
+infoForm.classList.add("bg-dark","text-center", "text-white", "mb-3");
 formDiv.appendChild(infoForm);
 infoForm.textContent = "Remplissez le formulaire pour valider votre commande : ";
 let newForm = document.createElement("form");
@@ -108,18 +108,30 @@ let formGroup = document.createElement("div");
 formGroup.classList.add("form-group", "d-flex", "justify-content-center","col-md-6");
 document.getElementsByTagName("form");
 newForm.appendChild(formGroup);
-
+let formRow1 = document.createElement("div");
+formRow1.classList.add("form-row");
+formGroup.appendChild(formRow1);
 let labelName = document.createElement("label");
-labelName.setAttribute("for", "name");
+labelName.setAttribute("for", "firstName");
 labelName.classList.add("form-label");
-labelName.textContent = "Votre nom";
+labelName.textContent = "Votre prénom";
 let inputName = document.createElement("input");
-inputName.setAttribute("name", "name");
+inputName.setAttribute("name", "firstName");
 inputName.setAttribute("type", "text");
-inputName.classList.add("required", "form-control");
-let span = document.createElement("span");
-span.id = "missingName";
-formGroup.appendChild(span);
+inputName.setAttribute("required", "required");
+inputName.classList.add("form-control");
+
+
+let labelName1 = document.createElement("label");
+labelName1.setAttribute("for", "lastName");
+labelName1.classList.add("form-label");
+labelName1.textContent = "Votre nom";
+
+let inputName1 = document.createElement("input");
+inputName1.setAttribute("name", "lastName");
+inputName1.setAttribute("type", "text");
+inputName1.setAttribute("required", "required");
+inputName1.classList.add("form-control");
 
 let formGroup2 = document.createElement("div");
 formGroup2.classList.add("form-group", "d-flex", "justify-content-center","col-md-6");
@@ -131,8 +143,9 @@ labelMail.classList.add("form-label");
 labelMail.textContent = "Votre email ";
 let inputMail = document.createElement("input");
 inputMail.setAttribute("name", "mail");
-inputMail.classList.add("required", "form-control");
-inputMail.setAttribute("type", "mail");
+inputMail.setAttribute("required", "required");
+inputMail.classList.add("form-control");
+inputMail.setAttribute("type", "email");
 let erreur = document.createElement("span");
 erreur.classList.add("error");
 document.getElementsByClassName("error").innerHTML = "Merci de saisir un email valide";
@@ -150,8 +163,9 @@ labelAddress.classList.add("form-label");
 let inputAddress = document.createElement("input");
 inputAddress.setAttribute("name", "address");
 inputAddress.setAttribute("type", "text");
+inputAddress.setAttribute("required", "required");
 labelAddress.textContent = "N° de rue / avenue ...";
-inputAddress.classList.add("required", "form-control");
+inputAddress.classList.add("form-control");
 
 let labelCity = document.createElement("label");
 labelCity.setAttribute("for", "city");
@@ -159,8 +173,9 @@ labelCity.classList.add("form-label");
 let inputCity = document.createElement("input");
 inputCity.setAttribute("name", "city");
 inputCity.setAttribute("type", "text");
+inputCity.setAttribute("required", "required");
 labelCity.textContent = "Ville";
-inputCity.classList.add("required", "form-control");
+inputCity.classList.add("form-control");
 
 let labelCode = document.createElement("label");
 labelCode.setAttribute("for", "zipcode");
@@ -168,11 +183,14 @@ labelCode.classList.add("form-label");
 let inputCode = document.createElement("input");
 inputCode.setAttribute("name","zipcode");
 inputCode.setAttribute("type", "text");
+inputCode.setAttribute("required", "required");
 labelCode.textContent = "Code postal";
-inputCode.classList.add("required", "form-control");
+inputCode.classList.add("form-control");
 
 formGroup.appendChild(labelName);
 formGroup.appendChild(inputName);
+formGroup.appendChild(labelName1);
+formGroup.appendChild(inputName1);
 formGroup2.appendChild(labelMail);
 formGroup2.appendChild(inputMail);
 formGroup2.appendChild(erreur);
@@ -183,82 +201,63 @@ formRow.appendChild(inputCity);
 formRow.appendChild(labelCode);
 formRow.appendChild(inputCode);
 
+// CREATION DU BOUTON DE VALIDATION DU FORMULAIRE
+
 let buttonForm = document.createElement("button");
     buttonForm.id = "submitBtn";
     newForm.appendChild(buttonForm);
     buttonForm.classList.add("btn", "btn-success", "btn-block");
-    buttonForm.setAttribute("type", "button");
+    buttonForm.setAttribute("type", "submit");
     buttonForm.textContent = "Valider ma commande"; 
     
 // CREATION DE L'OBJECT CONTACT POUR ENVOI DONNEES FORMULAIRE
 
-    const contact = {
-        allName: inputName.value,
-        mail: inputMail.value,
-        address: inputAddress.value,
-        city: inputCity.value,
-        zip: inputCode.value,        
-    }
-   
+  
    
 // VERIFICATION DE LA VALIDATION DES DONNES DU FORMULAIRE
 
-let goodForm = document.getElementById("submitBtn");
-let nom = document.getElementsByName("name");
-let missingName = document.getElementById("missingName");
-let okName = /^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/;
+let sendingForm = document.getElementById("submitBtn");
+sendingForm.addEventListener("click",function (event){
+   
+    event.preventDefault;
+   
+let contact = {
+       
+    firstName:  inputName.value,
+    lastName:  inputName1.value,
+    address:  inputAddress.value,
+    email:  inputMail.value,
+    city:  inputCity.value,
+  
+           
+  };
 
-function zip(){
-    let zipCode = document.getElementsByTagName('input')[5];
-    let regex = /^(?:[0-8]\\d|9[0-8])\\d{3}$/;
-    if(regex.zipCode == false){
-    alert("Merci de saisir un code postal valide");
-    return false;
-    } else if(zipCode == " "){
-    alert("Champ manquant");
-    return false;
-    } else {
-    return true;
-    }
-}
-    function mel(){
-        let mail = document.getElementsByTagName('input')[2].value;
-        let regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-        if(regex.mail == false){
-        alert("Merci de saisir un email valide");
-        return false;
-        } else if(mel == " "){
-        alert("Champ manquant");
-        return false;
-        } else {
-        return true;
-        }
-    }
-
-goodForm.addEventListener("click",function (zip, mel,){
-    window.location.href = "confirm.html";
+  let products = Object.keys(infoBear2).map(function(cle) {
+      return [String(cle), infoBear2[cle]];
+  });
+  console.log(products);
 });
-
 // FONCTION POST POUR ENVOI FORMULAIRE
 
-const sendForm = async function (contact, infoBear) {
+const sendForm = async function (contact, products) {
     let response = await fetch("http://localhost:3000/api/teddies/order", {
         method: "post",
         
         headers: {
             "content-type": "application/json"
         },
-        mode: "cors",
-        body: JSON.stringify(contact, infoBear),
-    });
-    
-        if (response.ok) {
+        
+        body: contact, products,
+    })
+    console.log(response);
+         if (response.ok) {
             window.location.href = "confirm.html";
-        } else {
+           console.log(response);
+    } else {
             console.error (response.status);
         }
    };
-
+   sendForm()
 
 // RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
 

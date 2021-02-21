@@ -13,6 +13,15 @@ let p = document.createElement("p");
 p.classList.add("text-center", "font-weight-bold");
 div.appendChild(p);
 p.textContent = " Nous vous remercions de votre confiance. Vous trouverez ci-joint le résumé de votre commande. Vous recevrez un email de confirmation dès l'envoi de votre commande !";
+
+let confirm = document.createElement("div");
+div.appendChild(confirm);
+for(let i = 0; i < infoBear2.length; i++) {
+let pInfo = document.createElement("p");
+confirm.appendChild(pInfo);
+let confirmInfo = infoBear2[i];
+pInfo.textContent = confirmInfo;
+}
 let p2 = document.createElement("p");
 document.createElement("p");
 div.appendChild(p2);
