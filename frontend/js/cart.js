@@ -119,6 +119,7 @@ let inputName = document.createElement("input");
 inputName.setAttribute("name", "firstName");
 inputName.setAttribute("type", "text");
 inputName.setAttribute("required", "required");
+inputName.setAttribute("pattern", "#^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$#");
 inputName.classList.add("form-control");
 
 
@@ -131,6 +132,7 @@ let inputName1 = document.createElement("input");
 inputName1.setAttribute("name", "lastName");
 inputName1.setAttribute("type", "text");
 inputName1.setAttribute("required", "required");
+inputName1.setAttribute("pattern", "#^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$#");
 inputName1.classList.add("form-control");
 
 let formGroup2 = document.createElement("div");
@@ -146,9 +148,7 @@ inputMail.setAttribute("name", "mail");
 inputMail.setAttribute("required", "required");
 inputMail.classList.add("form-control");
 inputMail.setAttribute("type", "email");
-let erreur = document.createElement("span");
-erreur.classList.add("error");
-document.getElementsByClassName("error").innerHTML = "Merci de saisir un email valide";
+inputMail.setAttribute("pattern", "/^[\w\-\+]+(\.[\w\-]+)*@[\w\-]+(\.[\w\-]+)*\.[\w\-]{2,4}$/");
 
 let formGroup3 = document.createElement("div");
 formGroup3.classList.add("form-group","d-flex", "justify-content-center", "col-md-6");
@@ -164,6 +164,7 @@ let inputAddress = document.createElement("input");
 inputAddress.setAttribute("name", "address");
 inputAddress.setAttribute("type", "text");
 inputAddress.setAttribute("required", "required");
+inputAddress.setAttribute("pattern", "[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
 labelAddress.textContent = "N° de rue / avenue ...";
 inputAddress.classList.add("form-control");
 
@@ -174,6 +175,7 @@ let inputCity = document.createElement("input");
 inputCity.setAttribute("name", "city");
 inputCity.setAttribute("type", "text");
 inputCity.setAttribute("required", "required");
+inputCity.setAttribute("pattern", "[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
 labelCity.textContent = "Ville";
 inputCity.classList.add("form-control");
 
@@ -184,6 +186,7 @@ let inputCode = document.createElement("input");
 inputCode.setAttribute("name","zipcode");
 inputCode.setAttribute("type", "text");
 inputCode.setAttribute("required", "required");
+inputCode.setAttribute("pattern", "/^(?:[0-8]\d|9[0-8])\d{3}$/");
 labelCode.textContent = "Code postal";
 inputCode.classList.add("form-control");
 
@@ -193,7 +196,6 @@ formGroup.appendChild(labelName1);
 formGroup.appendChild(inputName1);
 formGroup2.appendChild(labelMail);
 formGroup2.appendChild(inputMail);
-formGroup2.appendChild(erreur);
 formRow.appendChild(labelAddress);
 formRow.appendChild(inputAddress);
 formRow.appendChild(labelCity);
@@ -236,12 +238,12 @@ let contact = {
       return [String(cle), infoBear2[cle]];
   });
   console.log(products);
-});
+
 // FONCTION POST POUR ENVOI FORMULAIRE
 
 const sendForm = async function (contact, products) {
     let response = await fetch("http://localhost:3000/api/teddies/order", {
-        method: "post",
+        method: "POST",
         
         headers: {
             "content-type": "application/json"
@@ -258,7 +260,7 @@ const sendForm = async function (contact, products) {
         }
    };
    sendForm()
-
+});
 // RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
 
 let teddies;
