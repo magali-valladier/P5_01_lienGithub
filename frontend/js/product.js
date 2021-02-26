@@ -10,7 +10,7 @@ function getTeddy(teddies, idTeddy) {
 }  
 // CREATION DE LA CARD PRINCIPALE CONTENANT LE PRODUIT
 
-function createCard(myTeddy, idTeddy) {
+function createCard(myTeddy) {
 
     let cardDiv = document.createElement("div");
     cardDiv.classList.add("card-body","bg-info", "rounded", "w-75", "mx-auto");
@@ -85,18 +85,23 @@ tedColor.addEventListener("change", function choiceColor() {
 
 buttonCard.addEventListener("click", function(event) {
     
-    let infoBear = [myTeddy.name, myTeddy._id, myTeddy.price/10, tedColor.value]; 
-    localStorage.setItem("selectedBear", JSON.stringify(infoBear));  
-   
-    if(localStorage.length > 0) {
-        for(let i = 0; i < localStorage.length; i++) {
-
-            infoBear = JSON.parse(localStorage.getItem("selectedBear"));
-            infoBear.push(teddies);
-            console.log(myTeddy);
-            
-        }
-    }
+    let infoBear = localStorage.getItem("cart"); 
+    let ted = JSON.parse(infoBear);
+   if(infoBear === null) {
+    
+        ted = [];
+        
+        console.log(ted);
+    }         
+    ted.push({
+      _id: myTeddy._id,
+      name: myTeddy.name,
+      colors: tedColor.value,
+      price: myTeddy.price,
+    
+    });
+  localStorage.setItem("cart", JSON.stringify(ted));
+  console.log("cart", ted);
     alert("Article ajouté au panier !");
     event.preventDefault();
 

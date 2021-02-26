@@ -1,6 +1,7 @@
 let retrievedData = localStorage.getItem("selectedBear");
 let infoBear2 = JSON.parse(retrievedData);
 //STRUCTURE HTML DU PANIER
+
 function addCart() {
 
    
@@ -88,7 +89,7 @@ deleteBtn.onclick = function (event) {
 addCart()
 
 // CREATION DU FORMULAIRE DE COMMANDE
-
+// ajouter une fonction pour creation form
 let formDiv = document.createElement("div");
 formDiv.classList.add("bg-info");
 cart.appendChild(formDiv);
@@ -102,7 +103,6 @@ newForm.id = "form";
 document.getElementById("cart");
 formDiv.appendChild(newForm);
 newForm.setAttribute("method", "post");
-newForm.classList.add("needs-validation");
 
 let formGroup = document.createElement("div");
 formGroup.classList.add("form-group", "d-flex", "justify-content-center","col-md-6");
@@ -119,7 +119,7 @@ let inputName = document.createElement("input");
 inputName.setAttribute("name", "firstName");
 inputName.setAttribute("type", "text");
 inputName.setAttribute("required", "required");
-inputName.setAttribute("pattern", "#^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$#");
+//inputName.setAttribute("pattern", "#^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$#");
 inputName.classList.add("form-control");
 
 
@@ -132,7 +132,7 @@ let inputName1 = document.createElement("input");
 inputName1.setAttribute("name", "lastName");
 inputName1.setAttribute("type", "text");
 inputName1.setAttribute("required", "required");
-inputName1.setAttribute("pattern", "#^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$#");
+//inputName1.setAttribute("pattern", "#^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$#");
 inputName1.classList.add("form-control");
 
 let formGroup2 = document.createElement("div");
@@ -148,7 +148,7 @@ inputMail.setAttribute("name", "mail");
 inputMail.setAttribute("required", "required");
 inputMail.classList.add("form-control");
 inputMail.setAttribute("type", "email");
-inputMail.setAttribute("pattern", "/^[\w\-\+]+(\.[\w\-]+)*@[\w\-]+(\.[\w\-]+)*\.[\w\-]{2,4}$/");
+//inputMail.setAttribute("pattern", "/^[\w\-\+]+(\.[\w\-]+)*@[\w\-]+(\.[\w\-]+)*\.[\w\-]{2,4}$/");
 
 let formGroup3 = document.createElement("div");
 formGroup3.classList.add("form-group","d-flex", "justify-content-center", "col-md-6");
@@ -162,9 +162,9 @@ labelAddress.setAttribute("for", "address");
 labelAddress.classList.add("form-label");
 let inputAddress = document.createElement("input");
 inputAddress.setAttribute("name", "address");
-inputAddress.setAttribute("type", "text");
+//inputAddress.setAttribute("type", "text");
 inputAddress.setAttribute("required", "required");
-inputAddress.setAttribute("pattern", "[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
+//inputAddress.setAttribute("pattern", "[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
 labelAddress.textContent = "N° de rue / avenue ...";
 inputAddress.classList.add("form-control");
 
@@ -173,9 +173,9 @@ labelCity.setAttribute("for", "city");
 labelCity.classList.add("form-label");
 let inputCity = document.createElement("input");
 inputCity.setAttribute("name", "city");
-inputCity.setAttribute("type", "text");
+//inputCity.setAttribute("type", "text");
 inputCity.setAttribute("required", "required");
-inputCity.setAttribute("pattern", "[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
+//inputCity.setAttribute("pattern", "[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
 labelCity.textContent = "Ville";
 inputCity.classList.add("form-control");
 
@@ -186,7 +186,7 @@ let inputCode = document.createElement("input");
 inputCode.setAttribute("name","zipcode");
 inputCode.setAttribute("type", "text");
 inputCode.setAttribute("required", "required");
-inputCode.setAttribute("pattern", "/^(?:[0-8]\d|9[0-8])\d{3}$/");
+//inputCode.setAttribute("pattern", "/^(?:[0-8]\d|9[0-8])\d{3}$/");
 labelCode.textContent = "Code postal";
 inputCode.classList.add("form-control");
 
@@ -222,7 +222,7 @@ let sendingForm = document.getElementById("submitBtn");
 sendingForm.addEventListener("click",function (event){
    
     event.preventDefault;
-   
+});  
 let contact = {
        
     firstName:  inputName.value,
@@ -231,26 +231,24 @@ let contact = {
     email:  inputMail.value,
     city:  inputCity.value,
   
-           
   };
 
   let products = Object.keys(infoBear2).map(function(cle) {
       return [String(cle), infoBear2[cle]];
   });
   console.log(products);
+localStorage.setItem("orderData", products);
 
 // FONCTION POST POUR ENVOI FORMULAIRE
 
 const sendForm = async function (contact, products) {
     let response = await fetch("http://localhost:3000/api/teddies/order", {
         method: "POST",
-        
         headers: {
             "content-type": "application/json"
         },
-        
-        body: contact, products,
-    })
+        body: JSON.stringify({contact, products}) 
+    });
     console.log(response);
          if (response.ok) {
             window.location.href = "confirm.html";
@@ -259,20 +257,5 @@ const sendForm = async function (contact, products) {
             console.error (response.status);
         }
    };
-   sendForm()
-});
-// RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
+ sendForm()  
 
-let teddies;
-const getAllTeddies = async function () {
-    let response = await fetch("http://localhost:3000/api/teddies")
-        if (response.ok) {
-            let teddies = await response.json();
-               
-        } else {
-        console.error("Error", response.status)
-    }
-}
-
-// REACH API FUNCTION
-getAllTeddies()

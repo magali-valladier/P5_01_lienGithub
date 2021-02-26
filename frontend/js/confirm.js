@@ -41,8 +41,8 @@ p3.textContent = " Identifiant de  commande à conserver : " + random;
 // RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
 let teddies;
 const getAllTeddies = async function () {
-    let response = await fetch("http://localhost:3000/api/teddies", {
-        mode: 'cors'
+    let response = await fetch("http://localhost:3000/api/teddies/order", {
+        mode: 'cors',
     })
         if (response.ok) {
             let teddies = await response.json();

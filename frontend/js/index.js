@@ -1,16 +1,16 @@
 // CREATION DE 5 CARDS POUR CHAQUE OURSON
-
 function createCard(teddies) {
+
 // UNE BOUCLE FOR POUR ITERER 5 CARDS PRINCIPALES
 
     for(let i = 0; i < teddies.length; i++) {
         
         let cardDiv = document.createElement("div");
-        cardDiv.classList.add("card-deck", "card-mb-4", "card-body","bg-info", "rounded", "w-md-50", "w-sm-75","mx-auto", "xs-3", "sm-3", "mb-3");
+        cardDiv.classList.add("d-flex","justify-content-around","col-xs-4", "card-mb-4", "card-body","bg-info", "rounded", "w-md-50","mx-auto", "xs-3", "sm-3", "mb-3","flex-column");
         let div = document.getElementById("card");
         div.appendChild(cardDiv);
 
-// 5 ITERATIONS DE CREATION DES ELEMENTS DES CARDS
+// STRUCTURE HTML DES CARDS
 
     let imgCard = document.createElement("img");
     cardDiv.appendChild(imgCard);
@@ -27,30 +27,32 @@ function createCard(teddies) {
     priceCard.classList.add("container", "card-text", "mt-auto", "mb-auto");
     priceCard.textContent = (teddies[i].price/10) + "€";
 
-// CREATION DU BOUTON LIEN VERS PAGE PRODUIT SIMPLE    
+// CREATION DU BOUTON LIEN VERS PAGE PRODUIT UNIQUE    
 
     let buttonCard = document.createElement("button");
     cardDiv.appendChild(buttonCard);
     buttonCard.classList.add("btn", "btn-dark", "mt-auto", "mb-auto");
     buttonCard.setAttribute("type", "button");
     buttonCard.textContent = "En savoir plus"; 
-    document.querySelector("button");
-
+    
 //IMPLEMENTATION D'UNE FONCTION DE RECUPERATION DE L'URL PAGE PRODUIT     
 
     function url() {
-        
+
+//récupération de l'id de chaque ourson
         let getUrl = "?id=" + teddies[i]._id; 
+//redirection vers la page de produit unique
         window.location.href = "./frontend/product.html" + getUrl;
        }
-       console.log(url);
+    
+//ECOUTE DE L'EVENEMENT AU CLIC DU BOUTON      
 
-//ECOUTE DE L'EVENEMENT AU CLIC DU BOUTON       
-      
+//on recupére le bouton dans le DOM
+document.querySelector("button");  
     buttonCard.addEventListener("click", url);
     }
-}
-      
+
+}     
    
 let teddies;
 // RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
