@@ -65,8 +65,7 @@ let tedColor = document.getElementById("selectColor");
 tedColor.addEventListener("change", function choiceColor() {
      
     choosenColor = this.value;
-        let color = localStorage.setItem("tedColor", JSON.stringify(choosenColor));
-        console.log(choosenColor);
+    console.log(choosenColor);
 })                        
 
 // CREATION DU BOUTON D'AJOUT DES PRODUITS AU PANIER
@@ -85,7 +84,7 @@ tedColor.addEventListener("change", function choiceColor() {
 
 buttonCard.addEventListener("click", function(event) {
     
-    let infoBear = localStorage.getItem("cart"); 
+    let infoBear = localStorage.getItem("allCart"); 
     let ted = JSON.parse(infoBear);
    if(infoBear === null) {
     
@@ -100,8 +99,8 @@ buttonCard.addEventListener("click", function(event) {
       price: myTeddy.price,
     
     });
-  localStorage.setItem("cart", JSON.stringify(ted));
-  console.log("cart", ted);
+  localStorage.setItem("allCart", JSON.stringify(ted));
+  console.log("allCart", ted);
     alert("Article ajouté au panier !");
     event.preventDefault();
 

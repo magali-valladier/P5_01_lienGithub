@@ -1,12 +1,11 @@
-let retrievedData = localStorage.getItem("selectedBear");
-let infoBear2 = JSON.parse(retrievedData);
-//STRUCTURE HTML DU PANIER
+let retrievedData = localStorage.getItem("allCart");
+let myCart = JSON.parse(retrievedData);
 
+//STRUCTURE HTML DU PANIER
 function addCart() {
 
-   
+for (let i = 0; i < myCart.length; i++) {
 
-let colorTed = localStorage.getItem("tedColor");
 
     let cartInfo = document.createElement("div");
     cartInfo.classList.add("cartInfo", "bg-info");
@@ -20,15 +19,15 @@ let colorTed = localStorage.getItem("tedColor");
     recap.textContent = "Récapitulatif : ";
 
     let name = document.createElement("p");
-    name.innerHTML = "Nom de l'article : " + infoBear2[0];
+    name.innerHTML = "Nom de l'article : " + myCart[i].name;
     cartInfo.appendChild(name);
 
     let color = document.createElement("p");
-    color.innerHTML = "Couleur l'article : " + colorTed;
+    color.innerHTML = "Couleur l'article : " + myCart[i].colors;
     cartInfo.appendChild(color);
 
     let price = document.createElement("p");
-    price.innerHTML = "Prix unitaire : " + infoBear2[2] +"€";
+    price.innerHTML = "Prix unitaire : " + myCart[i].price +"€";
     cartInfo.appendChild(price);
 
     let quantity = document.createElement("p");
@@ -39,12 +38,12 @@ let colorTed = localStorage.getItem("tedColor");
     qty.setAttribute("id", "select");
     cartInfo.appendChild(qty);
 
-    for(let i = 1; i < 5; i++){
+    for(let j = 1; j < 5; j++){
 
         let optionQty = document.createElement("option");
-        optionQty.setAttribute("value", i);
-        select.appendChild(optionQty);
-        optionQty.textContent = i;
+        optionQty.setAttribute("value", j);
+        qty.appendChild(optionQty);
+        optionQty.textContent = j;
     }
 
 // CREATION D'UNE FONCTION D'ECOUTE DU CHANGEMENT DE LA QUANTITE POUR CALCUL PRIX TOTAL
@@ -54,8 +53,7 @@ let colorTed = localStorage.getItem("tedColor");
 
         let ttcPrice = this.value;
         document.getElementsByClassName("totalPrice");
-        totalPrice.innerHTML = infoBear2[2] * ttcPrice + "€";
-        price.innerHTML = "0€";
+        totalPrice.innerHTML = myCart[i].price * ttcPrice + "€";
         localStorage.setItem("price", ttcPrice);  
        }); 
       
@@ -67,11 +65,10 @@ let colorTed = localStorage.getItem("tedColor");
     let totalPrice = document.createElement("p");
     totalPrice.classList.add("totalPrice");
     cartInfo.appendChild(totalPrice);
-    totalPrice.innerHTML = infoBear2[2] +  "€";
     
     let deleteBtn = document.createElement("button");
     deleteBtn.classList.add("deleteBtn", "btn", "btn-dark", "mb-3");
-    deleteBtn.innerHTML = "Vider mon panier";
+    deleteBtn.innerHTML = "Supprimer";
     cartInfo.appendChild(deleteBtn);
 
 //CREATION DU BOUTON SUPPRIMER MON PANIER
@@ -85,6 +82,7 @@ deleteBtn.onclick = function (event) {
     name.innerHTML = "No product";
     alert("Votre panier est vide !");
 };
+}
 }
 addCart()
 
@@ -233,21 +231,21 @@ let contact = {
   
   };
 
-  let products = Object.keys(infoBear2).map(function(cle) {
-      return [String(cle), infoBear2[cle]];
-  });
+  let products = myCart;
+  let orderData = {contact, products};
+  console.log(contact);
   console.log(products);
-localStorage.setItem("orderData", products);
-
+ 
 // FONCTION POST POUR ENVOI FORMULAIRE
 
-const sendForm = async function (contact, products) {
+const sendForm = async function (orderData) {
     let response = await fetch("http://localhost:3000/api/teddies/order", {
         method: "POST",
         headers: {
             "content-type": "application/json"
         },
-        body: JSON.stringify({contact, products}) 
+        body: JSON.stringify(orderData) 
+       
     });
     console.log(response);
          if (response.ok) {
@@ -258,4 +256,3 @@ const sendForm = async function (contact, products) {
         }
    };
  sendForm()  
-
