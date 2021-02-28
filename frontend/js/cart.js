@@ -87,7 +87,7 @@ deleteBtn.onclick = function (event) {
 addCart()
 
 // CREATION DU FORMULAIRE DE COMMANDE
-// ajouter une fonction pour creation form
+
 let formDiv = document.createElement("div");
 formDiv.classList.add("bg-info");
 cart.appendChild(formDiv);
@@ -101,6 +101,7 @@ newForm.id = "form";
 document.getElementById("cart");
 formDiv.appendChild(newForm);
 newForm.setAttribute("method", "post");
+newForm.setAttribute("action", "confirm.html");
 
 let formGroup = document.createElement("div");
 formGroup.classList.add("form-group", "d-flex", "justify-content-center","col-md-6");
@@ -117,7 +118,6 @@ let inputName = document.createElement("input");
 inputName.setAttribute("name", "firstName");
 inputName.setAttribute("type", "text");
 inputName.setAttribute("required", "required");
-//inputName.setAttribute("pattern", "#^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$#");
 inputName.classList.add("form-control");
 
 
@@ -130,7 +130,6 @@ let inputName1 = document.createElement("input");
 inputName1.setAttribute("name", "lastName");
 inputName1.setAttribute("type", "text");
 inputName1.setAttribute("required", "required");
-//inputName1.setAttribute("pattern", "#^[a-z]+[ \-']?[[a-z]+[ \-']?]*[a-z]+$#");
 inputName1.classList.add("form-control");
 
 let formGroup2 = document.createElement("div");
@@ -146,7 +145,6 @@ inputMail.setAttribute("name", "mail");
 inputMail.setAttribute("required", "required");
 inputMail.classList.add("form-control");
 inputMail.setAttribute("type", "email");
-//inputMail.setAttribute("pattern", "/^[\w\-\+]+(\.[\w\-]+)*@[\w\-]+(\.[\w\-]+)*\.[\w\-]{2,4}$/");
 
 let formGroup3 = document.createElement("div");
 formGroup3.classList.add("form-group","d-flex", "justify-content-center", "col-md-6");
@@ -160,10 +158,8 @@ labelAddress.setAttribute("for", "address");
 labelAddress.classList.add("form-label");
 let inputAddress = document.createElement("input");
 inputAddress.setAttribute("name", "address");
-//inputAddress.setAttribute("type", "text");
+inputAddress.setAttribute("type", "text");
 inputAddress.setAttribute("required", "required");
-//inputAddress.setAttribute("pattern", "[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
-labelAddress.textContent = "N° de rue / avenue ...";
 inputAddress.classList.add("form-control");
 
 let labelCity = document.createElement("label");
@@ -171,9 +167,8 @@ labelCity.setAttribute("for", "city");
 labelCity.classList.add("form-label");
 let inputCity = document.createElement("input");
 inputCity.setAttribute("name", "city");
-//inputCity.setAttribute("type", "text");
+inputCity.setAttribute("type", "text");
 inputCity.setAttribute("required", "required");
-//inputCity.setAttribute("pattern", "[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
 labelCity.textContent = "Ville";
 inputCity.classList.add("form-control");
 
@@ -184,7 +179,6 @@ let inputCode = document.createElement("input");
 inputCode.setAttribute("name","zipcode");
 inputCode.setAttribute("type", "text");
 inputCode.setAttribute("required", "required");
-//inputCode.setAttribute("pattern", "/^(?:[0-8]\d|9[0-8])\d{3}$/");
 labelCode.textContent = "Code postal";
 inputCode.classList.add("form-control");
 
@@ -201,6 +195,7 @@ formRow.appendChild(inputCity);
 formRow.appendChild(labelCode);
 formRow.appendChild(inputCode);
 
+
 // CREATION DU BOUTON DE VALIDATION DU FORMULAIRE
 
 let buttonForm = document.createElement("button");
@@ -209,50 +204,83 @@ let buttonForm = document.createElement("button");
     buttonForm.classList.add("btn", "btn-success", "btn-block");
     buttonForm.setAttribute("type", "submit");
     buttonForm.textContent = "Valider ma commande"; 
-    
-// CREATION DE L'OBJECT CONTACT POUR ENVOI DONNEES FORMULAIRE
-
   
-   
-// VERIFICATION DE LA VALIDATION DES DONNES DU FORMULAIRE
+// CREATION ET RECUPERATION DES DONNEES POUR ENVOI FORMULAIRE
 
-let sendingForm = document.getElementById("submitBtn");
-sendingForm.addEventListener("click",function (event){
-   
-    event.preventDefault;
-});  
+// objet contact
 let contact = {
-       
     firstName:  inputName.value,
     lastName:  inputName1.value,
     address:  inputAddress.value,
     email:  inputMail.value,
     city:  inputCity.value,
-  
-  };
+ };
 
-  let products = myCart;
+localStorage.setItem("contact", JSON.stringify(contact));
+
+// tableau des produits
+
+  let products = [];
+for (let i = 0; i< myCart.length; i++) {
+    products.push(myCart[i]._id);
+    
+}
+  // creation de variable recapitulative des donnees à envoyer
   let orderData = {contact, products};
   console.log(contact);
   console.log(products);
- 
+
+// CREATION D'UNE FONCTION DE VALIDATION DU FORMULAIRE AVANT ENVOI
+
+function checkForm (event) {
+    let validForm = {
+        
+    firstName:  /[a-zA-Z]/,
+    lastName:  /[a-zA-Z]/,
+    address:  /[0-9] [a-zA-Z]/,
+    email:  /.+@.+\..+/,
+    city:  /[a-zA-Z]/,
+    };
+    if(!validForm){
+        event.preventDefault;
+    }
+};
+
+let sendingForm = document.getElementById("submitBtn");
+
+sendingForm.addEventListener("submit",function (){
+function validForm() {
+
+    if(firstname, lastname, address, city, email != "") {
+        return true;
+    } else {
+        alert("Un ou plusieurs champs sont manquants !");
+        return false;
+    }
+}
+validForm()
+})
 // FONCTION POST POUR ENVOI FORMULAIRE
 
-const sendForm = async function (orderData) {
-    let response = await fetch("http://localhost:3000/api/teddies/order", {
+async function sendForm (orderData) {
+    try {
+    let response = await fetch("http://localhost:3000/api/teddies/order", orderData, {
         method: "POST",
         headers: {
             "content-type": "application/json"
         },
-        body: JSON.stringify(orderData) 
+        body: JSON.stringify(orderData), 
        
     });
-    console.log(response);
-         if (response.ok) {
+       if (response.ok) {
             window.location.href = "confirm.html";
            console.log(response);
     } else {
             console.error (response.status);
         }
-   };
- sendForm()  
+   } catch (e) {
+       console.log(e);
+   }
+};
+
+sendForm();

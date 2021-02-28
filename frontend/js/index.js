@@ -57,6 +57,7 @@ document.querySelector("button");
 let teddies;
 // RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
 const getAllTeddies = async function () {
+    try {
     let response = await fetch("http://localhost:3000/api/teddies", {
     mode: "cors"
 })
@@ -66,7 +67,10 @@ const getAllTeddies = async function () {
         } else {
         console.error("Error", response.status)
     }
+} catch (e) {
+    console.log(e);
 }
+};
 
 // REACH API FUNCTION
 getAllTeddies()

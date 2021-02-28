@@ -111,6 +111,7 @@ buttonCard.addEventListener("click", function(event) {
 let teddies;
 // RECUPERATION DE L'URL AVEC ID
 const getOneTeddy = async function () {
+    try {
     let response = await fetch("http://localhost:3000/api/teddies/"+ idTeddy, {
         mode: 'cors'
     })
@@ -121,6 +122,9 @@ const getOneTeddy = async function () {
         } else {
         console.error("Error", response.status)
     }
+} catch (e) {
+    console.log(e);
 }
+};
 // APPEL DE LA FONCTION API
 getOneTeddy()

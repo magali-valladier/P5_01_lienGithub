@@ -1,5 +1,6 @@
-let retrievedData = localStorage.getItem("selectedBear");
-let infoBear2 = JSON.parse(retrievedData);
+let retrievedData = localStorage.getItem("allCart");
+let myCart = JSON.parse(retrievedData);
+
 let data = localStorage.getItem("price");
 let total = JSON.parse(data);
 
@@ -39,19 +40,23 @@ p3.textContent = " Identifiant de  commande à conserver : " + random;
 
 
 // RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
-let teddies;
-const getAllTeddies = async function () {
+async function sendForm (orderData) {
+    try {
     let response = await fetch("http://localhost:3000/api/teddies/order", {
-        mode: 'cors',
-    })
-        if (response.ok) {
-            let teddies = await response.json();
-                console.log(teddies);
-        } else {
-        console.error("Error", response.status)
-    }
-}
-
-
-// REACH API FUNCTION
-getAllTeddies()
+        method: "POST",
+        headers: {
+            "content-type": "application/json"
+        },
+        body: orderData, 
+       
+    });
+       if (response.ok) {
+            window.location.href = "confirm.html";
+           console.log(response);
+    } else {
+            console.error (response.status);
+        }
+   } catch (e) {
+       console.log(e);
+   }
+};
