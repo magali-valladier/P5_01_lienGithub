@@ -96,7 +96,7 @@ buttonCard.addEventListener("click", function(event) {
       _id: myTeddy._id,
       name: myTeddy.name,
       colors: tedColor.value,
-      price: myTeddy.price,
+      price: myTeddy.price/10,
     
     });
   localStorage.setItem("allCart", JSON.stringify(ted));

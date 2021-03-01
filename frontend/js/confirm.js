@@ -1,11 +1,9 @@
 let retrievedData = localStorage.getItem("allCart");
 let myCart = JSON.parse(retrievedData);
+let total = localStorage.getItem("price");
+console.log(myCart);
 
-let data = localStorage.getItem("price");
-let total = JSON.parse(data);
-
-console.log(data);
-
+ 
 const div = document.createElement("div");
 div.classList.add("bg-success");
 let diiv = document.getElementById("confirm");
@@ -17,22 +15,22 @@ p.textContent = " Nous vous remercions de votre confiance. Vous trouverez ci-joi
 
 let confirm = document.createElement("div");
 div.appendChild(confirm);
-for(let i = 0; i < infoBear2.length; i++) {
+
+for(let i = 0; i < myCart.length; i++) {
 let pInfo = document.createElement("p");
 confirm.appendChild(pInfo);
-let confirmInfo = infoBear2[i];
-pInfo.textContent = confirmInfo;
+pInfo.textContent = myCart[i]._id;
+
 }
 let p2 = document.createElement("p");
 document.createElement("p");
 div.appendChild(p2);
-p2.textContent = " Prix total de votre commande :" + infoBear2[2]*total + "€";
+p2.textContent = " Prix total de votre commande :" + total;
+
+// CREATION D'UNE FONCTION POUR CREER NOMBRE ALEATOIRE DE COMMANDE
 let p3 = document.createElement("p");
 document.createElement("p");
 div.appendChild(p3);
-
-// CREATION D'UNE FONCTION POUR CREER NOMBRE ALEATOIRE DE COMMANDE
-
 let min = 1;
 let max = 100000000;
 let random = Math.floor(Math.random() * (max - min)) + min;
@@ -47,7 +45,7 @@ async function sendForm (orderData) {
         headers: {
             "content-type": "application/json"
         },
-        body: orderData, 
+        body: JSON.stringify(orderData), 
        
     });
        if (response.ok) {

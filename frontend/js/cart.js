@@ -53,8 +53,9 @@ for (let i = 0; i < myCart.length; i++) {
 
         let ttcPrice = this.value;
         document.getElementsByClassName("totalPrice");
+        let ttc = myCart[i].price * ttcPrice + "€";
         totalPrice.innerHTML = myCart[i].price * ttcPrice + "€";
-        localStorage.setItem("price", ttcPrice);  
+        localStorage.setItem("price", ttc);  
        }); 
       
     
@@ -81,6 +82,9 @@ deleteBtn.onclick = function (event) {
     color.innerHTML = "No product";
     name.innerHTML = "No product";
     alert("Votre panier est vide !");
+    localStorage.removeItem(myCart[i]);
+    localStorage.getItem(myCart[i]);
+    
 };
 }
 }
@@ -154,6 +158,7 @@ let formRow = document.createElement("div");
 formRow.classList.add("form-row");
 formGroup3.appendChild(formRow);
 let labelAddress = document.createElement("label");
+labelAddress.textContent = "N° / voie ";
 labelAddress.setAttribute("for", "address");
 labelAddress.classList.add("form-label");
 let inputAddress = document.createElement("input");
@@ -231,49 +236,40 @@ for (let i = 0; i< myCart.length; i++) {
   console.log(products);
 
 // CREATION D'UNE FONCTION DE VALIDATION DU FORMULAIRE AVANT ENVOI
-
-function checkForm (event) {
-    let validForm = {
-        
-    firstName:  /[a-zA-Z]/,
-    lastName:  /[a-zA-Z]/,
-    address:  /[0-9] [a-zA-Z]/,
-    email:  /.+@.+\..+/,
-    city:  /[a-zA-Z]/,
-    };
-    if(!validForm){
-        event.preventDefault;
-    }
-};
-
-let sendingForm = document.getElementById("submitBtn");
-
-sendingForm.addEventListener("submit",function (){
-function validForm() {
-
-    if(firstname, lastname, address, city, email != "") {
-        return true;
+function checkData() {
+    
+    let checkName = /[a-zA-Z]/;
+    let checkMail = /.+@.+\..+/;
+    let checkAddress = /[0-9] [a-zA-Z]/;
+  
+    if (checkName.test(firstName, lastName, city), checkMail.test(email), checkAddress.test(address) == false) {
+      alert("Erreur lors de la saisie des champs");
+      return false;
     } else {
-        alert("Un ou plusieurs champs sont manquants !");
-        return false;
+      return true;
     }
-}
-validForm()
-})
+  }
+
+  let sendingForm = document.getElementById("submitBtn");
+
+sendingForm.addEventListener("click",() => {
+
 // FONCTION POST POUR ENVOI FORMULAIRE
 
-async function sendForm (orderData) {
+async function sendForm () {
     try {
-    let response = await fetch("http://localhost:3000/api/teddies/order", orderData, {
+    let response = await fetch("http://localhost:3000/api/teddies/order", {
         method: "POST",
         headers: {
             "content-type": "application/json"
         },
         body: JSON.stringify(orderData), 
        
-    });
+    })
        if (response.ok) {
+           
             window.location.href = "confirm.html";
+            localStorage.setItem("data", orderData);
            console.log(response);
     } else {
             console.error (response.status);
@@ -281,6 +277,6 @@ async function sendForm (orderData) {
    } catch (e) {
        console.log(e);
    }
-};
+  };
 
-sendForm();
+})
