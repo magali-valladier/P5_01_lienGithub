@@ -38,7 +38,7 @@ for (let i = 0; i < myCart.length; i++) {
     qty.setAttribute("id", myCart[i]._id);
     cartInfo.appendChild(qty);
 
-    for(let j = 1; j < 5; j++){
+    for(let j = 0; j < 5; j++){
 
         let optionQty = document.createElement("option");
         optionQty.setAttribute("value", j);
@@ -53,9 +53,16 @@ for (let i = 0; i < myCart.length; i++) {
 
         let ttcPrice = this.value;
         document.getElementsByClassName("totalPrice");
-        let ttc = myCart[i].price * ttcPrice + "€";
-        totalPrice.innerHTML = myCart[i].price * ttcPrice + "€";
-        localStorage.setItem("price", ttc);  
+        let ttc = myCart[i].price * ttcPrice;
+        totalPrice.innerHTML = ttc  + "€";
+        let totalCart = localStorage.getItem("price");
+        let total = JSON.parse(totalCart);
+        if(totalCart == null ) {
+        total = [];
+      }
+       total.push(ttc);
+       
+       localStorage.setItem("price",total);
        }); 
       
  
@@ -82,13 +89,26 @@ deleteBtn.onclick = function (event) {
     color.innerHTML = "No product";
     name.innerHTML = "No product";
     alert("Votre panier est vide !");
-    localStorage.removeItem(i);
-    localStorage.getItem(myCart[i]);
-    
+        
         };
     }
+    // CREATION D'UNE LIGNE PRIX TOTAL PANIER POUR STOCKAGE
+
+    let allPrice = document.createElement("div");
+    allPrice.classList.add("allPrice");
+    cart.appendChild(allPrice);
+            let finalPrice = document.createElement("p");
+     finalPrice.classList.add("finalPrice");
+     allPrice.appendChild(finalPrice);
+            finalPrice.textContent = "Prix total de votre panier: ";
+
+
+
+ 
 }
 addCart()
+
+
 
 // CREATION DU FORMULAIRE DE COMMANDE
 
@@ -221,7 +241,7 @@ let contact = {
     city:  inputCity.value,
  };
 
-localStorage.setItem("contact", contact);
+localStorage.setItem("contact", JSON.stringify(contact));
 
 // tableau des produits
 

@@ -1,8 +1,10 @@
 let retrievedData = localStorage.getItem("allCart");
 let myCart = JSON.parse(retrievedData);
-let total = localStorage.getItem("price");
-console.log(myCart);
+let data = localStorage.getItem("price");
+let total = JSON.parse(data);
 
+console.log(myCart);
+console.log(total);
  
 const div = document.createElement("div");
 div.classList.add("bg-success");
@@ -25,7 +27,14 @@ pInfo.textContent = myCart[i]._id;
 let p2 = document.createElement("p");
 document.createElement("p");
 div.appendChild(p2);
-p2.textContent = " Prix total de votre commande :" + total;
+
+let tot=0;
+for (let i=0; i < total.length; i++) {
+tot = tot + total[i];
+parsed = parseInt(tot);
+}
+console.log(parsed);
+p2.textContent = " Prix total de votre commande :" + parsed + "€";
 
 // CREATION D'UNE FONCTION POUR CREER NOMBRE ALEATOIRE DE COMMANDE
 let p3 = document.createElement("p");
@@ -34,7 +43,7 @@ div.appendChild(p3);
 let min = 1;
 let max = 100000000;
 let random = Math.floor(Math.random() * (max - min)) + min;
-p3.textContent = " Identifiant de  commande à conserver : " + random;
+p3.textContent = " Identifiant de  commande à conserver : " + random ;
 
 
 // RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
