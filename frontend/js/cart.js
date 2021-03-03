@@ -57,13 +57,13 @@ for (let i = 0; i < myCart.length; i++) {
         totalPrice.innerHTML = ttc  + "€";
         let totalCart = localStorage.getItem("price");
         let total = JSON.parse(totalCart);
-        if(totalCart == null ) {
+       if (totalCart === null){
         total = [];
-      }
+        console.log(total);
+       }
        total.push(ttc);
-       
-       localStorage.setItem("price",total);
-       }); 
+       localStorage.setItem("price",JSON.stringify(total));
+    });
       
  
        let priceTitle = document.createElement("p");
