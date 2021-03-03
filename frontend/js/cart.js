@@ -35,7 +35,7 @@ for (let i = 0; i < myCart.length; i++) {
     quantity.textContent = "Quantité : ";
 
     let qty = document.createElement("select");
-    qty.setAttribute("id", "select");
+    qty.setAttribute("id", myCart[i]._id);
     cartInfo.appendChild(qty);
 
     for(let j = 1; j < 5; j++){
@@ -47,7 +47,7 @@ for (let i = 0; i < myCart.length; i++) {
     }
 
 // CREATION D'UNE FONCTION D'ECOUTE DU CHANGEMENT DE LA QUANTITE POUR CALCUL PRIX TOTAL
-    let tedQty = document.getElementById("select");
+    let tedQty = document.getElementById(myCart[i]._id);
 
     tedQty.addEventListener("change", function choice () {
 
@@ -58,14 +58,14 @@ for (let i = 0; i < myCart.length; i++) {
         localStorage.setItem("price", ttc);  
        }); 
       
-    
-    let priceTitle = document.createElement("p");
-    cartInfo.appendChild(priceTitle);
-    priceTitle.textContent = "Prix total : ";
+ 
+       let priceTitle = document.createElement("p");
+       cartInfo.appendChild(priceTitle);
+       priceTitle.textContent = "Prix total : ";
 
     let totalPrice = document.createElement("p");
-    totalPrice.classList.add("totalPrice");
-    cartInfo.appendChild(totalPrice);
+       totalPrice.classList.add("totalPrice");
+       cartInfo.appendChild(totalPrice);
     
     let deleteBtn = document.createElement("button");
     deleteBtn.classList.add("deleteBtn", "btn", "btn-dark", "mb-3");
@@ -82,11 +82,11 @@ deleteBtn.onclick = function (event) {
     color.innerHTML = "No product";
     name.innerHTML = "No product";
     alert("Votre panier est vide !");
-    localStorage.removeItem(myCart[i]);
+    localStorage.removeItem(i);
     localStorage.getItem(myCart[i]);
     
-};
-}
+        };
+    }
 }
 addCart()
 
@@ -221,14 +221,15 @@ let contact = {
     city:  inputCity.value,
  };
 
-localStorage.setItem("contact", JSON.stringify(contact));
+localStorage.setItem("contact", contact);
 
 // tableau des produits
 
   let products = [];
 for (let i = 0; i< myCart.length; i++) {
+
     products.push(myCart[i]._id);
-    
+    localStorage.setItem("id", products);
 }
   // creation de variable recapitulative des donnees à envoyer
   let orderData = {contact, products};
@@ -278,5 +279,5 @@ async function sendForm () {
        console.log(e);
    }
   };
-
+sendForm()
 })
