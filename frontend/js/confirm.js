@@ -1,3 +1,5 @@
+//on récupère les données stockées dans le localstorage
+
 let retrievedData = localStorage.getItem("allCart");
 let myCart = JSON.parse(retrievedData);
 let data = localStorage.getItem("price");
@@ -5,7 +7,9 @@ let total = JSON.parse(data);
 
 console.log(myCart);
 console.log(total);
- 
+
+//CREATION DE LA STRUCTURE HTML DE LA PAGE
+
 const div = document.createElement("div");
 div.classList.add("bg-success");
 let diiv = document.getElementById("confirm");
@@ -18,19 +22,23 @@ p.textContent = " Nous vous remercions de votre confiance. Vous trouverez ci-joi
 let confirm = document.createElement("div");
 div.appendChild(confirm);
 
+// BOUCLE POUR RECUPERER LES INFOS DE CHAQUE PRODUITS DU PANIER
+
 for(let i = 0; i < myCart.length; i++) {
  
     let article = document.createElement("p");
     confirm.appendChild(article);
     article.textContent = "Mon article :" ;    
-let pInfo = document.createElement("p");
-confirm.appendChild(pInfo);
-pInfo.textContent = myCart[i]._id;
-
+    let pInfo = document.createElement("p");
+    confirm.appendChild(pInfo);
+    pInfo.textContent = myCart[i]._id;
 }
+
 let p2 = document.createElement("p");
 document.createElement("p");
 div.appendChild(p2);
+
+//CONVERSION DES DONNES PRIX DU LOCALSTORAGE EN NUMBER
 
 let tot=0;
 for (let i=0; i < total.length; i++) {
@@ -41,6 +49,7 @@ console.log(parsed);
 p2.textContent = " Prix total de votre commande :" + parsed + "€";
 
 // CREATION D'UNE FONCTION POUR CREER NOMBRE ALEATOIRE DE COMMANDE
+
 let p3 = document.createElement("p");
 document.createElement("p");
 div.appendChild(p3);
@@ -49,35 +58,18 @@ let max = 100000000;
 let random = Math.floor(Math.random() * (max - min)) + min;
 p3.textContent = " Identifiant de  commande à conserver : " + random ;
 
+//CREATION D'UN BOUTON POUR SUPPRIMER LES DONNES DU LOCAL STORAGE
+
 let btnClear = document.createElement("button");
 btnClear.id = "btnClear";
-    div.appendChild(btnClear);
-    btnClear.classList.add("btn", "btn-info", "btn-block");
-    btnClear.setAttribute("type", "button");
-    btnClear.textContent = "Retour"; 
+div.appendChild(btnClear);
+btnClear.classList.add("btn", "btn-info", "btn-block");
+btnClear.setAttribute("type", "button");
+btnClear.textContent = "Retour"; 
 
-    btnClear.addEventListener('click', function () {
-        localStorage.clear();
-    });
+//au clic, on efface le contenu localstorage
 
-// RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
-async function sendForm (orderData) {
-    try {
-    let response = await fetch("http://localhost:3000/api/teddies/order", {
-        method: "POST",
-        headers: {
-            "content-type": "application/json"
-        },
-        body: JSON.stringify(orderData), 
-       
-    });
-       if (response.ok) {
-            window.location.href = "confirm.html";
-           console.log(response);
-    } else {
-            console.error (response.status);
-        }
-   } catch (e) {
-       console.log(e);
-   }
-};
+btnClear.addEventListener('click', function () {
+    localStorage.clear();
+});
+

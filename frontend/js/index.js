@@ -35,7 +35,7 @@ function createCard(teddies) {
     buttonCard.setAttribute("type", "button");
     buttonCard.textContent = "En savoir plus"; 
     
-//IMPLEMENTATION D'UNE FONCTION DE RECUPERATION DE L'URL PAGE PRODUIT     
+//FONCTION DE RECUPERATION DE L'URL PAGE PRODUIT     
 
     function url() {
 
@@ -48,18 +48,20 @@ function createCard(teddies) {
 //ECOUTE DE L'EVENEMENT AU CLIC DU BOUTON      
 
 //on recupére le bouton dans le DOM
-document.querySelector("button");  
+document.querySelector("button"); 
+
+//au clic, le bouton exécute la fonction
     buttonCard.addEventListener("click", url);
     }
-
 }     
    
 let teddies;
+
 // RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
 const getAllTeddies = async function () {
     try {
-    let response = await fetch("http://localhost:3000/api/teddies", {
-    mode: "cors"
+        let response = await fetch("http://localhost:3000/api/teddies", {
+        mode: "cors"
 })
         if (response.ok) {
             let teddies = await response.json();
@@ -67,7 +69,7 @@ const getAllTeddies = async function () {
         } else {
         console.error("Error", response.status)
     }
-} catch (e) {
+}   catch (e) {
     console.log(e);
 }
 };

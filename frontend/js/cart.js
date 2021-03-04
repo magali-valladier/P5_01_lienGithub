@@ -1,3 +1,5 @@
+//on récupère les données stockées dans le localstorage
+
 let retrievedData = localStorage.getItem("allCart");
 let myCart = JSON.parse(retrievedData);
 
@@ -38,6 +40,8 @@ for (let i = 0; i < myCart.length; i++) {
     qty.setAttribute("id", myCart[i]._id);
     cartInfo.appendChild(qty);
 
+// BOUCLE POUR CREER UN SELECT QUANTITE   
+
     for(let j = 0; j < 5; j++){
 
         let optionQty = document.createElement("option");
@@ -49,6 +53,8 @@ for (let i = 0; i < myCart.length; i++) {
 // CREATION D'UNE FONCTION D'ECOUTE DU CHANGEMENT DE LA QUANTITE POUR CALCUL PRIX TOTAL
     let tedQty = document.getElementById(myCart[i]._id);
 
+//au changement du select, on modifie la quantité sélectionnée et le prix total 
+    
     tedQty.addEventListener("change", function choice () {
 
         let ttcPrice = this.value;
@@ -57,6 +63,9 @@ for (let i = 0; i < myCart.length; i++) {
         totalPrice.innerHTML = ttc  + "€";
         let totalCart = localStorage.getItem("price");
         let total = JSON.parse(totalCart);
+
+// on ajoute le prix total dans le localstorage pour récupérer la valeur dans la page confirm.html
+
        if (totalCart === null){
         total = [];
         console.log(total);
@@ -70,18 +79,21 @@ for (let i = 0; i < myCart.length; i++) {
        cartInfo.appendChild(priceTitle);
        priceTitle.textContent = "Prix total : ";
 
-    let totalPrice = document.createElement("p");
+       let totalPrice = document.createElement("p");
        totalPrice.classList.add("totalPrice");
        cartInfo.appendChild(totalPrice);
-    
   }   
 
 //CREATION DU BOUTON SUPPRIMER MON PANIER
+
 let deleteBtn = document.createElement("button");
 deleteBtn.classList.add("deleteBtn", "btn", "btn-dark", "mb-3");
 deleteBtn.innerHTML = "Vider mon panier";
 cart.appendChild(deleteBtn);
 document.getElementsByClassName("deleteBtn");
+
+// au clic, on supprime les données du localStorage en évitant de recharger la page
+
 deleteBtn.onclick = function (event) {
     event.preventDefault();
    
@@ -92,11 +104,7 @@ deleteBtn.onclick = function (event) {
      localStorage.removeItem("price");
       };
     }
-
-
 addCart()
-
-
 
 // CREATION DU FORMULAIRE DE COMMANDE
 
@@ -130,9 +138,8 @@ let inputName = document.createElement("input");
 inputName.setAttribute("name", "firstName");
 inputName.setAttribute("type", "text");
 inputName.setAttribute("required", "required");
-inputName.setAttribute("pattern", "[a-zA-Z]");
+inputName.setAttribute("pattern", "[a-zA-ZÀ-ÿ]");
 inputName.classList.add("form-control");
-
 
 let labelName1 = document.createElement("label");
 labelName1.setAttribute("for", "lastName");
@@ -143,7 +150,7 @@ let inputName1 = document.createElement("input");
 inputName1.setAttribute("name", "lastName");
 inputName1.setAttribute("type", "text");
 inputName1.setAttribute("required", "required");
-inputName1.setAttribute("pattern", "^[a-zA-Z]+$");
+inputName1.setAttribute("pattern", "[a-zA-ZÀ-ÿ]");
 inputName1.classList.add("form-control");
 
 let formGroup2 = document.createElement("div");
@@ -157,7 +164,7 @@ labelMail.textContent = "Votre email ";
 let inputMail = document.createElement("input");
 inputMail.setAttribute("name", "mail");
 inputMail.setAttribute("required", "required");
-inputMail.setAttribute("pattern", ".+@.+\..+");
+inputMail.setAttribute("pattern", "[a-z0-9._%+-]+@[a-z0-9.-]+[.][a-z]{2,4}");
 inputMail.classList.add("form-control");
 inputMail.setAttribute("type", "email");
 
@@ -186,7 +193,7 @@ let inputCity = document.createElement("input");
 inputCity.setAttribute("name", "city");
 inputCity.setAttribute("type", "text");
 inputCity.setAttribute("required", "required");
-inputCity.setAttribute("pattern", "[a-zA-Z]");
+inputCity.setAttribute("pattern", "[a-zA-ZÀ-ÿ]");
 labelCity.textContent = "Ville";
 inputCity.classList.add("form-control");
 
@@ -214,7 +221,6 @@ formRow.appendChild(inputCity);
 formRow.appendChild(labelCode);
 formRow.appendChild(inputCode);
 
-
 // CREATION DU BOUTON DE VALIDATION DU FORMULAIRE
 
 let buttonForm = document.createElement("button");
@@ -228,22 +234,22 @@ let buttonForm = document.createElement("button");
 
 // objet contact
 let contact = {
-    firstName:  inputName.value,
-    lastName:  inputName1.value,
-    address:  inputAddress.value,
-    email:  inputMail.value,
-    city:  inputCity.value,
+  firstName:  inputName.value,
+  lastName:  inputName1.value,
+  address:  inputAddress.value,
+  email:  inputMail.value,
+  city:  inputCity.value,
  };
 
 localStorage.setItem("contact", JSON.stringify(contact));
 
 // tableau des produits
 
-  let products = [];
+let products = [];
 for (let i = 0; i< myCart.length; i++) {
 
-    products.push(myCart[i]._id);
-    localStorage.setItem("id", products);
+  products.push(myCart[i]._id);
+  localStorage.setItem("id", products);
 }
   // creation de variable recapitulative des donnees à envoyer
   let orderData = {contact, products};
@@ -252,31 +258,42 @@ for (let i = 0; i< myCart.length; i++) {
 
 let sendingForm = document.getElementById("submitBtn");
 
-sendingForm.addEventListener("click",() => {
-
 // FONCTION POST POUR ENVOI FORMULAIRE
 
+sendingForm.addEventListener("click",() => {
+
+//on vérifie que les données saisies sont correctes
+
+if (contact.firstname, contact.lastname, contact.address, contact.city, contact.email != "" ) {
+  
+  return true;
+} else {
+  alert("Champs manquants ou invalide");
+  return false;
+}
+
+//FONCTION DE RECUPERATION DES DONNES POUR FETCH POST VERS PAGE CONFIRMATION
+
 async function sendForm () {
-    try {
+  try {
     let response = await fetch("http://localhost:3000/api/teddies/order", {
-        method: "POST",
-        headers: {
-            "content-type": "application/json"
-        },
-        body: JSON.stringify(orderData), 
-       
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+              },
+      body: JSON.stringify(orderData), 
     })
-       if (response.ok) {
-           
-            window.location.href = "confirm.html";
-            localStorage.setItem("data", orderData);
-           console.log(response);
+    if (response.ok) {
+       
+      window.location.href = "confirm.html";
+      localStorage.setItem("data", orderData);
+      console.log(response);
     } else {
-            console.error (response.status);
-        }
-   } catch (e) {
-       console.log(e);
-   }
-  };
-sendForm()
+      console.error (response.status);
+           }
+    } catch (e) {
+      console.log(e);
+                }
+   };
+   sendForm()
 })

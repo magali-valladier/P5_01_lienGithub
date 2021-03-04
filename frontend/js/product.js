@@ -3,7 +3,7 @@
 let urlSearch = new URLSearchParams(window.location.search);
 let idTeddy = urlSearch.get("id");
  
-//CREATION D'UNE FONCTION POUR RECUPERER UN TEDDY PAR SON ID UNIQUE
+//FONCTION POUR RECUPERER UN TEDDY PAR SON ID UNIQUE
 function getTeddy(teddies, idTeddy) {
 
     let myTeddy = teddies.find(teddies => teddies["_id"] == idTeddy);
@@ -19,39 +19,38 @@ function createCard(myTeddy) {
 
 // CREATION DU CONTENU DE L'ELEMENT CARD (PRODUIT)
 
-let imgCard = document.createElement("img");
-cardDiv.appendChild(imgCard);
-imgCard.classList.add("card-image-top", "rounded-circle", "w-25", "img-fluid");
-imgCard.src = myTeddy.imageUrl;
+    let imgCard = document.createElement("img");
+    cardDiv.appendChild(imgCard);
+    imgCard.classList.add("card-image-top", "rounded-circle", "w-25", "img-fluid");
+    imgCard.src = myTeddy.imageUrl;
 
-let titleCard = document.createElement("h3");
-cardDiv.appendChild(titleCard);
-titleCard.classList.add("card-title", "title", "mt-auto", "mb-auto", "pl-50");
-titleCard.textContent = myTeddy.name;
+    let titleCard = document.createElement("h3");
+    cardDiv.appendChild(titleCard);
+    titleCard.classList.add("card-title", "title", "mt-auto", "mb-auto", "pl-50");
+    titleCard.textContent = myTeddy.name;
 
-let priceCard = document.createElement("p");
-cardDiv.appendChild(priceCard);
-priceCard.classList.add("card-text", "mt-auto", "mb-auto");
-priceCard.textContent = (myTeddy.price/10 + "€");
+    let priceCard = document.createElement("p");
+    cardDiv.appendChild(priceCard);
+    priceCard.classList.add("card-text", "mt-auto", "mb-auto");
+    priceCard.textContent = (myTeddy.price/10 + "€");
 
-let infoCard = document.createElement("p");
-cardDiv.appendChild(infoCard);
-infoCard.classList.add("card-title","font-italic", "title", "mt-auto", "mb-auto", "pl-50");
-infoCard.textContent = myTeddy.description;
+    let infoCard = document.createElement("p");
+    cardDiv.appendChild(infoCard);
+    infoCard.classList.add("card-title","font-italic", "title", "mt-auto", "mb-auto", "pl-50");
+    infoCard.textContent = myTeddy.description;
 
-let color = document.createElement("h4");
-color.classList.add("mt-5");
-cardDiv.appendChild(color);
-color.textContent = "Choisissez votre couleur dans la liste:";
+    let color = document.createElement("h4");
+    color.classList.add("mt-5");
+    cardDiv.appendChild(color);
+    color.textContent = "Choisissez votre couleur dans la liste:";
 
-let list = document.createElement("select");
-list.id = "selectColor";
-list.setAttribute("name", "select");
-cardDiv.appendChild(list);
-let allColors = myTeddy.colors; 
+    let list = document.createElement("select");
+    list.id = "selectColor";
+    list.setAttribute("name", "select");
+    cardDiv.appendChild(list);
+    let allColors = myTeddy.colors; 
 
-
-// CREATION D'UNE BOUCLE POUR CREER LES OPTIONS COULEUR
+//BOUCLE POUR CREER LES OPTIONS COULEUR
 
 for(let i = 0; i < allColors.length; i++) {
 
@@ -61,6 +60,8 @@ for(let i = 0; i < allColors.length; i++) {
 }
 
 let tedColor = document.getElementById("selectColor");
+
+// au changement, on récupére la valeur du select modifié
 
 tedColor.addEventListener("change", function choiceColor() {
      
@@ -77,15 +78,15 @@ tedColor.addEventListener("change", function choiceColor() {
     buttonCard.textContent = "Ajouter au panier"; 
     document.querySelector("button");
     
-    
-
 //ECOUTE DE L'EVENEMENT AU CLIC DU BOUTON ARTICLE AJOUTE      
     
-
 buttonCard.addEventListener("click", function(event) {
     
     let infoBear = localStorage.getItem("allCart"); 
     let ted = JSON.parse(infoBear);
+
+// on ajoute les produits au localStorage à chaque sélection
+
    if(infoBear === null) {
     
         ted = [];
@@ -99,13 +100,13 @@ buttonCard.addEventListener("click", function(event) {
       price: myTeddy.price/10,
     
     });
+//on stocke les produits ajoutés au localStorage pour le panier
+
   localStorage.setItem("allCart", JSON.stringify(ted));
   console.log("allCart", ted);
-    alert("Article ajouté au panier !");
-    event.preventDefault();
-
-})
-
+  alert("Article ajouté au panier !");
+  event.preventDefault();
+    })
 };
 
 let teddies;
