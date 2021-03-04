@@ -74,38 +74,26 @@ for (let i = 0; i < myCart.length; i++) {
        totalPrice.classList.add("totalPrice");
        cartInfo.appendChild(totalPrice);
     
-    let deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("deleteBtn", "btn", "btn-dark", "mb-3");
-    deleteBtn.innerHTML = "Supprimer";
-    cartInfo.appendChild(deleteBtn);
+  }   
 
 //CREATION DU BOUTON SUPPRIMER MON PANIER
-
+let deleteBtn = document.createElement("button");
+deleteBtn.classList.add("deleteBtn", "btn", "btn-dark", "mb-3");
+deleteBtn.innerHTML = "Vider mon panier";
+cart.appendChild(deleteBtn);
 document.getElementsByClassName("deleteBtn");
 deleteBtn.onclick = function (event) {
     event.preventDefault();
-    totalPrice.innerHTML = "0€";
-    price.innerHTML = "0€";
-    color.innerHTML = "No product";
-    name.innerHTML = "No product";
+   
     alert("Votre panier est vide !");
-        
-        };
+     localStorage.setItem("allCart", "i");   
+     localStorage.removeItem("allCart");
+     localStorage.setItem("price", "i");   
+     localStorage.removeItem("price");
+      };
     }
-    // CREATION D'UNE LIGNE PRIX TOTAL PANIER POUR STOCKAGE
-
-    let allPrice = document.createElement("div");
-    allPrice.classList.add("allPrice");
-    cart.appendChild(allPrice);
-            let finalPrice = document.createElement("p");
-     finalPrice.classList.add("finalPrice");
-     allPrice.appendChild(finalPrice);
-            finalPrice.textContent = "Prix total de votre panier: ";
 
 
-
- 
-}
 addCart()
 
 
@@ -142,6 +130,7 @@ let inputName = document.createElement("input");
 inputName.setAttribute("name", "firstName");
 inputName.setAttribute("type", "text");
 inputName.setAttribute("required", "required");
+inputName.setAttribute("pattern", "[a-zA-Z]");
 inputName.classList.add("form-control");
 
 
@@ -154,6 +143,7 @@ let inputName1 = document.createElement("input");
 inputName1.setAttribute("name", "lastName");
 inputName1.setAttribute("type", "text");
 inputName1.setAttribute("required", "required");
+inputName1.setAttribute("pattern", "^[a-zA-Z]+$");
 inputName1.classList.add("form-control");
 
 let formGroup2 = document.createElement("div");
@@ -167,6 +157,7 @@ labelMail.textContent = "Votre email ";
 let inputMail = document.createElement("input");
 inputMail.setAttribute("name", "mail");
 inputMail.setAttribute("required", "required");
+inputMail.setAttribute("pattern", ".+@.+\..+");
 inputMail.classList.add("form-control");
 inputMail.setAttribute("type", "email");
 
@@ -185,6 +176,7 @@ let inputAddress = document.createElement("input");
 inputAddress.setAttribute("name", "address");
 inputAddress.setAttribute("type", "text");
 inputAddress.setAttribute("required", "required");
+inputAddress.setAttribute("pattern", "[0-9] [a-zA-Z]");
 inputAddress.classList.add("form-control");
 
 let labelCity = document.createElement("label");
@@ -194,17 +186,19 @@ let inputCity = document.createElement("input");
 inputCity.setAttribute("name", "city");
 inputCity.setAttribute("type", "text");
 inputCity.setAttribute("required", "required");
+inputCity.setAttribute("pattern", "[a-zA-Z]");
 labelCity.textContent = "Ville";
 inputCity.classList.add("form-control");
 
 let labelCode = document.createElement("label");
 labelCode.setAttribute("for", "zipcode");
 labelCode.classList.add("form-label");
+labelCode.textContent = "Code postal";
 let inputCode = document.createElement("input");
 inputCode.setAttribute("name","zipcode");
 inputCode.setAttribute("type", "text");
 inputCode.setAttribute("required", "required");
-labelCode.textContent = "Code postal";
+inputCode.setAttribute("pattern", "^\\d{5}$");
 inputCode.classList.add("form-control");
 
 formGroup.appendChild(labelName);
@@ -256,22 +250,7 @@ for (let i = 0; i< myCart.length; i++) {
   console.log(contact);
   console.log(products);
 
-// CREATION D'UNE FONCTION DE VALIDATION DU FORMULAIRE AVANT ENVOI
-function checkData() {
-    
-    let checkName = /[a-zA-Z]/;
-    let checkMail = /.+@.+\..+/;
-    let checkAddress = /[0-9] [a-zA-Z]/;
-  
-    if (checkName.test(firstName, lastName, city), checkMail.test(email), checkAddress.test(address) == false) {
-      alert("Erreur lors de la saisie des champs");
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  let sendingForm = document.getElementById("submitBtn");
+let sendingForm = document.getElementById("submitBtn");
 
 sendingForm.addEventListener("click",() => {
 

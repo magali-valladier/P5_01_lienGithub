@@ -19,6 +19,10 @@ let confirm = document.createElement("div");
 div.appendChild(confirm);
 
 for(let i = 0; i < myCart.length; i++) {
+ 
+    let article = document.createElement("p");
+    confirm.appendChild(article);
+    article.textContent = "Mon article :" ;    
 let pInfo = document.createElement("p");
 confirm.appendChild(pInfo);
 pInfo.textContent = myCart[i]._id;
@@ -45,6 +49,16 @@ let max = 100000000;
 let random = Math.floor(Math.random() * (max - min)) + min;
 p3.textContent = " Identifiant de  commande à conserver : " + random ;
 
+let btnClear = document.createElement("button");
+btnClear.id = "btnClear";
+    div.appendChild(btnClear);
+    btnClear.classList.add("btn", "btn-info", "btn-block");
+    btnClear.setAttribute("type", "button");
+    btnClear.textContent = "Retour"; 
+
+    btnClear.addEventListener('click', function () {
+        localStorage.clear();
+    });
 
 // RECUPERATION DE L'API AVEC FETCH ASYNCHRONE
 async function sendForm (orderData) {
