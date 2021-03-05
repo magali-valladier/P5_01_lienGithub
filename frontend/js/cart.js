@@ -138,7 +138,6 @@ let inputName = document.createElement("input");
 inputName.setAttribute("name", "firstName");
 inputName.setAttribute("type", "text");
 inputName.setAttribute("required", "required");
-inputName.setAttribute("pattern", "[a-zA-ZÀ-ÿ]");
 inputName.classList.add("form-control");
 
 let labelName1 = document.createElement("label");
@@ -150,7 +149,6 @@ let inputName1 = document.createElement("input");
 inputName1.setAttribute("name", "lastName");
 inputName1.setAttribute("type", "text");
 inputName1.setAttribute("required", "required");
-inputName1.setAttribute("pattern", "[a-zA-ZÀ-ÿ]");
 inputName1.classList.add("form-control");
 
 let formGroup2 = document.createElement("div");
@@ -164,7 +162,6 @@ labelMail.textContent = "Votre email ";
 let inputMail = document.createElement("input");
 inputMail.setAttribute("name", "mail");
 inputMail.setAttribute("required", "required");
-inputMail.setAttribute("pattern", "[a-z0-9._%+-]+@[a-z0-9.-]+[.][a-z]{2,4}");
 inputMail.classList.add("form-control");
 inputMail.setAttribute("type", "email");
 
@@ -183,7 +180,6 @@ let inputAddress = document.createElement("input");
 inputAddress.setAttribute("name", "address");
 inputAddress.setAttribute("type", "text");
 inputAddress.setAttribute("required", "required");
-inputAddress.setAttribute("pattern", "[0-9] [a-zA-Z]");
 inputAddress.classList.add("form-control");
 
 let labelCity = document.createElement("label");
@@ -193,7 +189,6 @@ let inputCity = document.createElement("input");
 inputCity.setAttribute("name", "city");
 inputCity.setAttribute("type", "text");
 inputCity.setAttribute("required", "required");
-inputCity.setAttribute("pattern", "[a-zA-ZÀ-ÿ]");
 labelCity.textContent = "Ville";
 inputCity.classList.add("form-control");
 
@@ -205,7 +200,6 @@ let inputCode = document.createElement("input");
 inputCode.setAttribute("name","zipcode");
 inputCode.setAttribute("type", "text");
 inputCode.setAttribute("required", "required");
-inputCode.setAttribute("pattern", "^\\d{5}$");
 inputCode.classList.add("form-control");
 
 formGroup.appendChild(labelName);
@@ -256,21 +250,27 @@ for (let i = 0; i< myCart.length; i++) {
   console.log(contact);
   console.log(products);
 
-let sendingForm = document.getElementById("submitBtn");
-
 // FONCTION POST POUR ENVOI FORMULAIRE
-
+let sendingForm = document.getElementById("submitBtn");
 sendingForm.addEventListener("click",() => {
 
 //on vérifie que les données saisies sont correctes
-
-if (contact.firstname, contact.lastname, contact.address, contact.city, contact.email != "" ) {
+function checkForm() {
+ 
+  let regText = /[a-zA-ZÀ-ÿ]/;
+  let regMail = /[a-z0-9._%+-]+@[a-z0-9.-]+[.][a-z]{2,4}/;
+  let regCode = /^\\d{5}$/;
+  let regAdress = /[0-9] [a-zA-Z]/;
   
-  return true;
-} else {
-  alert("Champs manquants ou invalide");
-  return false;
-}
+  if(inputName.value, inputName1.value, inputCity.value != regText && inputMail.value != regMail && inputCode.value != regCode && inputAddress.value != regAdress) {
+    return true;
+    } else {
+      alert("Champs manquants ou invalide");
+      return false;
+    }
+  }
+  checkForm()
+  })
 
 //FONCTION DE RECUPERATION DES DONNES POUR FETCH POST VERS PAGE CONFIRMATION
 
@@ -296,4 +296,4 @@ async function sendForm () {
                 }
    };
    sendForm()
-})
+

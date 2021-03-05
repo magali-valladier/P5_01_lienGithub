@@ -79,20 +79,22 @@ tedColor.addEventListener("change", function choiceColor() {
     document.querySelector("button");
     
 //ECOUTE DE L'EVENEMENT AU CLIC DU BOUTON ARTICLE AJOUTE      
-    
+
+
 buttonCard.addEventListener("click", function(event) {
-    
+       
     let infoBear = localStorage.getItem("allCart"); 
     let ted = JSON.parse(infoBear);
 
 // on ajoute les produits au localStorage à chaque sélection
-
+function addTed() { 
    if(infoBear === null) {
     
         ted = [];
         
         console.log(ted);
-    }         
+    }    
+     
     ted.push({
       _id: myTeddy._id,
       name: myTeddy.name,
@@ -100,6 +102,8 @@ buttonCard.addEventListener("click", function(event) {
       price: myTeddy.price/10,
     
     });
+}
+addTed()
 //on stocke les produits ajoutés au localStorage pour le panier
 
   localStorage.setItem("allCart", JSON.stringify(ted));
