@@ -224,7 +224,6 @@ let buttonForm = document.createElement("button");
     newForm.appendChild(buttonForm);
     buttonForm.classList.add("btn", "btn-success", "btn-block");
     buttonForm.setAttribute("type", "submit");
-    buttonForm.setAttribute("onclick", "checkForm()");
     buttonForm.textContent = "Valider ma commande"; 
   
 // CREATION ET RECUPERATION DES DONNEES POUR ENVOI FORMULAIRE
@@ -255,9 +254,6 @@ for (let i = 0; i< myCart.length; i++) {
 
 // FONCTION POST POUR ENVOI FORMULAIRE
 
-let myForm = document.getElementById("form");
-myForm.addEventListener("onsubmit",(event) => {
-event.preventDefault();
 //on vérifie que les données saisies sont correctes
 function checkForm() {
  
@@ -272,13 +268,12 @@ function checkForm() {
       alert("Champs manquants ou invalide");
       return false;
     }
-  }
-}) 
+   }
 
-
-//FONCTION DE RECUPERATION DES DONNES POUR FETCH POST VERS PAGE CONFIRMATION
+   //FONCTION DE RECUPERATION DES DONNES POUR FETCH POST VERS PAGE CONFIRMATION
 let sendingForm = document.getElementById("submitBtn");
 sendingForm.addEventListener("click",() => {
+
 async function sendForm () {
   try {
     let response = await fetch("http://localhost:3000/api/teddies/order", {
@@ -289,7 +284,7 @@ async function sendForm () {
       body: JSON.stringify(orderData), 
     })
     if (response.ok) {
-       
+       checkForm();
       window.location.href = "confirm.html";
       localStorage.setItem("data", orderData);
       console.log(response);
