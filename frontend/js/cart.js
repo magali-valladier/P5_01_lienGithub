@@ -60,7 +60,10 @@ for (let i = 0; i < myCart.length; i++) {
         let ttcPrice = this.value;
         document.getElementsByClassName("totalPrice");
         let ttc = myCart[i].price * ttcPrice;
-        totalPrice.innerHTML = ttc  + "€";
+        let totalPrice = document.createElement("p");
+       totalPrice.classList.add("totalPrice");
+       cartInfo.appendChild(totalPrice);
+       totalPrice.innerHTML = ttc  + "€";
         let totalCart = localStorage.getItem("price");
         let total = JSON.parse(totalCart);
 
@@ -79,9 +82,7 @@ for (let i = 0; i < myCart.length; i++) {
        cartInfo.appendChild(priceTitle);
        priceTitle.textContent = "Prix total : ";
 
-       let totalPrice = document.createElement("p");
-       totalPrice.classList.add("totalPrice");
-       cartInfo.appendChild(totalPrice);
+       
   }   
 
 //CREATION DU BOUTON SUPPRIMER MON PANIER
@@ -120,8 +121,9 @@ let newForm = document.createElement("form");
 newForm.id = "form";
 document.getElementById("cart");
 formDiv.appendChild(newForm);
+newForm.classList.add("needs-validation", "novalidate");
 newForm.setAttribute("method", "post");
-newForm.setAttribute("action", "confirm.html");
+newForm.setAttribute("action", "confirm.html")
 
 let formGroup = document.createElement("div");
 formGroup.classList.add("form-group", "d-flex", "justify-content-center","col-md-6");
@@ -222,6 +224,7 @@ let buttonForm = document.createElement("button");
     newForm.appendChild(buttonForm);
     buttonForm.classList.add("btn", "btn-success", "btn-block");
     buttonForm.setAttribute("type", "submit");
+    buttonForm.setAttribute("onclick", "checkForm()");
     buttonForm.textContent = "Valider ma commande"; 
   
 // CREATION ET RECUPERATION DES DONNEES POUR ENVOI FORMULAIRE
@@ -251,9 +254,10 @@ for (let i = 0; i< myCart.length; i++) {
   console.log(products);
 
 // FONCTION POST POUR ENVOI FORMULAIRE
-let sendingForm = document.getElementById("submitBtn");
-sendingForm.addEventListener("click",() => {
 
+let myForm = document.getElementById("form");
+myForm.addEventListener("onsubmit",(event) => {
+event.preventDefault();
 //on vérifie que les données saisies sont correctes
 function checkForm() {
  
@@ -269,11 +273,12 @@ function checkForm() {
       return false;
     }
   }
-  checkForm()
-  })
+}) 
+
 
 //FONCTION DE RECUPERATION DES DONNES POUR FETCH POST VERS PAGE CONFIRMATION
-
+let sendingForm = document.getElementById("submitBtn");
+sendingForm.addEventListener("click",() => {
 async function sendForm () {
   try {
     let response = await fetch("http://localhost:3000/api/teddies/order", {
@@ -296,4 +301,4 @@ async function sendForm () {
                 }
    };
    sendForm()
-
+  })
