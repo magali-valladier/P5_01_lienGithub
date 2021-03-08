@@ -252,7 +252,7 @@ console.log(products);
 
 // FONCTION POST POUR ENVOI FORMULAIRE
 let sendingForm = document.getElementById("submitBtn");
-sendingForm.addEventListener("submit",() => {
+sendingForm.addEventListener("submit",(e) => {
 
 //on vérifie que les données saisies sont correctes
 function checkForm() {
@@ -265,12 +265,13 @@ function checkForm() {
   if(inputName.value, inputName1.value, inputCity.value != regText && inputMail.value != regMail && inputCode.value != regCode && inputAddress.value != regAdress) {
     alert("Champs manquants ou invalide");
     return false;
+    
     } else {
     
       return true;
     }
    }
-
+   e.preventDefault();
    //FONCTION DE RECUPERATION DES DONNES POUR FETCH POST VERS PAGE CONFIRMATION
 
 
