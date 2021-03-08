@@ -228,7 +228,35 @@ let buttonForm = document.createElement("button");
   
 // CREATION ET RECUPERATION DES DONNEES POUR ENVOI FORMULAIRE
 
-// objet contact
+
+
+// FONCTION POST POUR ENVOI FORMULAIRE
+let sendingForm = document.getElementById("form");
+sendingForm.addEventListener("submit",(e) => {
+
+//on vérifie que les données saisies sont correctes
+
+  e.preventDefault();
+  let regText = /[a-zA-ZÀ-ÿ]/;
+  let regMail = /[a-z0-9._%+-]+@[a-z0-9.-]+[.][a-z]{2,4}/;
+  let regCode = /^[0-9]{4,6}$/;
+  let regAddress = /[0-9] [a-zA-Z]/;
+  
+  if(regCode.test(inputCode.value), regMail.test(inputMail.value), regAddress.test(inputAddress.value),regText.test(inputName.value),regText.test(inputName1.value)== false) {
+    alert("Champs manquants ou invalide");
+    return false;
+    
+    } else {
+      
+     sendForm();
+      return true;
+
+    }
+})
+
+async function sendForm() {
+  try {
+    // objet contact
 let contact = {
   firstName:  inputName.value,
   lastName:  inputName1.value,
@@ -250,51 +278,28 @@ for (let i = 0; i< myCart.length; i++) {
 console.log(contact);
 console.log(products);
 
-// FONCTION POST POUR ENVOI FORMULAIRE
-let sendingForm = document.getElementById("submitBtn");
-sendingForm.addEventListener("submit",(e) => {
-
-//on vérifie que les données saisies sont correctes
-function checkForm() {
- 
-  let regText = /[a-zA-ZÀ-ÿ]/;
-  let regMail = /[a-z0-9._%+-]+@[a-z0-9.-]+[.][a-z]{2,4}/;
-  let regCode = /^\\d{5}$/;
-  let regAdress = /[0-9] [a-zA-Z]/;
-  
-  if(inputName.value, inputName1.value, inputCity.value != regText && inputMail.value != regMail && inputCode.value != regCode && inputAddress.value != regAdress) {
-    alert("Champs manquants ou invalide");
-    return false;
-    
-    } else {
-    
-      return true;
-    }
-   }
-   e.preventDefault();
-   //FONCTION DE RECUPERATION DES DONNES POUR FETCH POST VERS PAGE CONFIRMATION
-
-
-async function sendForm () {
-  try {
+    let send = JSON.stringify({"contact": contact,
+    "products": products});
     let response = await fetch("http://localhost:3000/api/teddies/order", {
       method: "POST",
       headers: {
         "content-type": "application/json"
               },
-      body: JSON.stringify(contact, products), 
-    })
+      body:  send,
+    });
+    
     if (response.ok) {
-       checkForm();
+    
       window.location.href = "confirm.html";
       localStorage.setItem("data", contact, products);
       console.log(response);
     } else {
-      console.error (response.status);
+      console.log ("err");
            }
     } catch (e) {
       console.log(e);
                 }
-   };
-   sendForm()
-  })
+}
+   //FONCTION DE RECUPERATION DES DONNES POUR FETCH POST VERS PAGE CONFIRMATION
+
+
