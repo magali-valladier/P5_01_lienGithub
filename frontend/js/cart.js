@@ -123,6 +123,7 @@ document.getElementById("cart");
 formDiv.appendChild(newForm);
 newForm.classList.add("needs-validation", "novalidate");
 newForm.setAttribute("method", "post");
+newForm.setAttribute("action", "confirm.html");
 
 let formGroup = document.createElement("div");
 formGroup.classList.add("form-group", "d-flex", "justify-content-center","col-md-6");
