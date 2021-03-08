@@ -123,7 +123,6 @@ document.getElementById("cart");
 formDiv.appendChild(newForm);
 newForm.classList.add("needs-validation", "novalidate");
 newForm.setAttribute("method", "post");
-newForm.setAttribute("action", "confirm.html")
 
 let formGroup = document.createElement("div");
 formGroup.classList.add("form-group", "d-flex", "justify-content-center","col-md-6");
@@ -247,12 +246,12 @@ for (let i = 0; i< myCart.length; i++) {
   products.push(myCart[i]._id);
   localStorage.setItem("id", products);
 }
-  // creation de variable recapitulative des donnees à envoyer
-  let orderData = {contact, products};
-  console.log(contact);
-  console.log(products);
+console.log(contact);
+console.log(products);
 
 // FONCTION POST POUR ENVOI FORMULAIRE
+let sendingForm = document.getElementById("submitBtn");
+sendingForm.addEventListener("submit",() => {
 
 //on vérifie que les données saisies sont correctes
 function checkForm() {
@@ -263,16 +262,16 @@ function checkForm() {
   let regAdress = /[0-9] [a-zA-Z]/;
   
   if(inputName.value, inputName1.value, inputCity.value != regText && inputMail.value != regMail && inputCode.value != regCode && inputAddress.value != regAdress) {
-    return true;
+    alert("Champs manquants ou invalide");
+    return false;
     } else {
-      alert("Champs manquants ou invalide");
-      return false;
+    
+      return true;
     }
    }
 
    //FONCTION DE RECUPERATION DES DONNES POUR FETCH POST VERS PAGE CONFIRMATION
-let sendingForm = document.getElementById("submitBtn");
-sendingForm.addEventListener("click",() => {
+
 
 async function sendForm () {
   try {
@@ -281,12 +280,12 @@ async function sendForm () {
       headers: {
         "content-type": "application/json"
               },
-      body: JSON.stringify(orderData), 
+      body: JSON.stringify(contact, products), 
     })
     if (response.ok) {
        checkForm();
       window.location.href = "confirm.html";
-      localStorage.setItem("data", orderData);
+      localStorage.setItem("data", contact, products);
       console.log(response);
     } else {
       console.error (response.status);
