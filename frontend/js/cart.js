@@ -58,12 +58,7 @@ for (let i = 0; i < myCart.length; i++) {
     tedQty.addEventListener("change", function choice () {
 
         let ttcPrice = this.value;
-        document.getElementsByClassName("totalPrice");
-        let ttc = myCart[i].price * ttcPrice;
-        let totalPrice = document.createElement("p");
-       totalPrice.classList.add("totalPrice");
-       cartInfo.appendChild(totalPrice);
-       totalPrice.innerHTML = ttc  + "€";
+       let ttc = myCart[i].price * ttcPrice;
         let totalCart = localStorage.getItem("price");
         let total = JSON.parse(totalCart);
 
@@ -76,13 +71,6 @@ for (let i = 0; i < myCart.length; i++) {
        total.push(ttc);
        localStorage.setItem("price",JSON.stringify(total));
     });
-      
- 
-       let priceTitle = document.createElement("p");
-       cartInfo.appendChild(priceTitle);
-       priceTitle.textContent = "Prix total : ";
-
-       
   }   
 
 //CREATION DU BOUTON SUPPRIMER MON PANIER
@@ -242,7 +230,7 @@ sendingForm.addEventListener("submit",(e) => {
   let regCode = /^[0-9]{4,6}$/;
   let regAddress = /[0-9] [a-zA-Z]/;
   
-  if(regCode.test(inputCode.value), regMail.test(inputMail.value), regAddress.test(inputAddress.value),regText.test(inputName.value),regText.test(inputName1.value)== false) {
+  if(regCode.test(inputCode.value) && regMail.test(inputMail.value) && regAddress.test(inputAddress.value) && regText.test(inputName.value) && regText.test(inputName1.value) === false) {
     alert("Champs manquants ou invalide");
     return false;
     
@@ -301,5 +289,3 @@ console.log(products);
                 }
 }
    //FONCTION DE RECUPERATION DES DONNES POUR FETCH POST VERS PAGE CONFIRMATION
-
-
