@@ -52,39 +52,29 @@ for(let j = 0; j < 5; j++){
 // CREATION D'UNE FONCTION D'ECOUTE DU CHANGEMENT DE LA QUANTITE POUR CALCUL PRIX TOTAL
 let tedQty = document.getElementById(myCart[i]._id);
 
-//au changement du select, on modifie la quantité sélectionnée et le prix total 
+///au changement du select, on modifie la quantité sélectionnée et le prix total 
     
 tedQty.addEventListener("change", function choice () {
 
   let ttcPrice = this.value;
-  document.getElementsByClassName("totalPrice");
-  let ttc = myCart[i].price * ttcPrice;
-  let totalPrice = document.createElement("p");
-  totalPrice.classList.add("totalPrice");
-  cartInfo.appendChild(totalPrice);
-  totalPrice.innerHTML = ttc  + "€";
+ let ttc = myCart[i].price * ttcPrice;
   let totalCart = localStorage.getItem("price");
   let total = JSON.parse(totalCart);
 
 // on ajoute le prix total dans le localstorage pour récupérer la valeur dans la page confirm.html
 
-if (totalCart === null){
+ if (totalCart === null){
   total = [];
   console.log(total);
-}
-total.push(ttc);
-localStorage.setItem("price",JSON.stringify(total));
+ }
+ total.push(ttc);
+ localStorage.setItem("price",JSON.stringify(total));
 });
-      
-let priceTitle = document.createElement("p");
-cartInfo.appendChild(priceTitle);
-priceTitle.textContent = "Prix total : ";
 }   
-
 //CREATION DU BOUTON SUPPRIMER MON PANIER
 
 let deleteBtn = document.createElement("button");
-deleteBtn.classList.add("deleteBtn", "btn", "btn-dark", "mb-3");
+deleteBtn.classList.add("deleteBtn", "btn", "btn-dark", "mt-3","mb-3");
 deleteBtn.innerHTML = "Vider mon panier";
 cart.appendChild(deleteBtn);
 document.getElementsByClassName("deleteBtn");
