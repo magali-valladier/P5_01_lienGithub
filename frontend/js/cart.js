@@ -8,70 +8,78 @@ function addCart() {
 
 for (let i = 0; i < myCart.length; i++) {
 
+  let cartInfo = document.createElement("div");
+  cartInfo.classList.add("cartInfo", "bg-info");
+  document.getElementById("cart");
+  cart.appendChild(cartInfo);
 
-    let cartInfo = document.createElement("div");
-    cartInfo.classList.add("cartInfo", "bg-info");
-    document.getElementById("cart");
-    cart.appendChild(cartInfo);
+  let recap = document.createElement("h4");
+  document.getElementById("cartInfo");
+  recap.classList.add("bg-dark","text-center", "text-white");
+  cartInfo.appendChild(recap);
+  recap.textContent = "Récapitulatif : ";
 
-    let recap = document.createElement("h4");
-    document.getElementById("cartInfo");
-    recap.classList.add("bg-dark","text-center", "text-white");
-    cartInfo.appendChild(recap);
-    recap.textContent = "Récapitulatif : ";
+  let name = document.createElement("p");
+  name.innerHTML = "Nom de l'article : " + myCart[i].name;
+  cartInfo.appendChild(name);
 
-    let name = document.createElement("p");
-    name.innerHTML = "Nom de l'article : " + myCart[i].name;
-    cartInfo.appendChild(name);
+  let color = document.createElement("p");
+  color.innerHTML = "Couleur l'article : " + myCart[i].colors;
+  cartInfo.appendChild(color);
 
-    let color = document.createElement("p");
-    color.innerHTML = "Couleur l'article : " + myCart[i].colors;
-    cartInfo.appendChild(color);
+  let price = document.createElement("p");
+  price.innerHTML = "Prix unitaire : " + myCart[i].price +"€";
+  cartInfo.appendChild(price);
 
-    let price = document.createElement("p");
-    price.innerHTML = "Prix unitaire : " + myCart[i].price +"€";
-    cartInfo.appendChild(price);
+  let quantity = document.createElement("p");
+  cartInfo.appendChild(quantity);
+  quantity.textContent = "Quantité : ";
 
-    let quantity = document.createElement("p");
-    cartInfo.appendChild(quantity);
-    quantity.textContent = "Quantité : ";
-
-    let qty = document.createElement("select");
-    qty.setAttribute("id", myCart[i]._id);
-    cartInfo.appendChild(qty);
+  let qty = document.createElement("select");
+  qty.setAttribute("id", myCart[i]._id);
+  cartInfo.appendChild(qty);
 
 // BOUCLE POUR CREER UN SELECT QUANTITE   
 
-    for(let j = 0; j < 5; j++){
+for(let j = 0; j < 5; j++){
 
-        let optionQty = document.createElement("option");
-        optionQty.setAttribute("value", j);
-        qty.appendChild(optionQty);
-        optionQty.textContent = j;
-    }
+  let optionQty = document.createElement("option");
+  optionQty.setAttribute("value", j);
+  qty.appendChild(optionQty);
+  optionQty.textContent = j;
+  }
 
 // CREATION D'UNE FONCTION D'ECOUTE DU CHANGEMENT DE LA QUANTITE POUR CALCUL PRIX TOTAL
-    let tedQty = document.getElementById(myCart[i]._id);
+let tedQty = document.getElementById(myCart[i]._id);
 
 //au changement du select, on modifie la quantité sélectionnée et le prix total 
     
-    tedQty.addEventListener("change", function choice () {
+tedQty.addEventListener("change", function choice () {
 
-        let ttcPrice = this.value;
-       let ttc = myCart[i].price * ttcPrice;
-        let totalCart = localStorage.getItem("price");
-        let total = JSON.parse(totalCart);
+  let ttcPrice = this.value;
+  document.getElementsByClassName("totalPrice");
+  let ttc = myCart[i].price * ttcPrice;
+  let totalPrice = document.createElement("p");
+  totalPrice.classList.add("totalPrice");
+  cartInfo.appendChild(totalPrice);
+  totalPrice.innerHTML = ttc  + "€";
+  let totalCart = localStorage.getItem("price");
+  let total = JSON.parse(totalCart);
 
 // on ajoute le prix total dans le localstorage pour récupérer la valeur dans la page confirm.html
 
-       if (totalCart === null){
-        total = [];
-        console.log(total);
-       }
-       total.push(ttc);
-       localStorage.setItem("price",JSON.stringify(total));
-    });
-  }   
+if (totalCart === null){
+  total = [];
+  console.log(total);
+}
+total.push(ttc);
+localStorage.setItem("price",JSON.stringify(total));
+});
+      
+let priceTitle = document.createElement("p");
+cartInfo.appendChild(priceTitle);
+priceTitle.textContent = "Prix total : ";
+}   
 
 //CREATION DU BOUTON SUPPRIMER MON PANIER
 
@@ -84,15 +92,15 @@ document.getElementsByClassName("deleteBtn");
 // au clic, on supprime les données du localStorage en évitant de recharger la page
 
 deleteBtn.onclick = function (event) {
-    event.preventDefault();
+  event.preventDefault();
    
-    alert("Votre panier est vide !");
-     localStorage.setItem("allCart", "i");   
-     localStorage.removeItem("allCart");
-     localStorage.setItem("price", "i");   
-     localStorage.removeItem("price");
-      };
-    }
+  alert("Votre panier est vide !");
+  localStorage.setItem("allCart", "i");   
+  localStorage.removeItem("allCart");
+  localStorage.setItem("price", "i");   
+  localStorage.removeItem("price");
+  };
+}
 addCart()
 
 // CREATION DU FORMULAIRE DE COMMANDE
@@ -208,16 +216,12 @@ formRow.appendChild(inputCode);
 // CREATION DU BOUTON DE VALIDATION DU FORMULAIRE
 
 let buttonForm = document.createElement("button");
-    buttonForm.id = "submitBtn";
-    newForm.appendChild(buttonForm);
-    buttonForm.classList.add("btn", "btn-success", "btn-block");
-    buttonForm.setAttribute("type", "submit");
-    buttonForm.textContent = "Valider ma commande"; 
+  buttonForm.id = "submitBtn";
+  newForm.appendChild(buttonForm);
+  buttonForm.classList.add("btn", "btn-success", "btn-block");
+  buttonForm.setAttribute("type", "submit");
+  buttonForm.textContent = "Valider ma commande"; 
   
-// CREATION ET RECUPERATION DES DONNEES POUR ENVOI FORMULAIRE
-
-
-
 // FONCTION POST POUR ENVOI FORMULAIRE
 let sendingForm = document.getElementById("form");
 sendingForm.addEventListener("submit",(e) => {
@@ -230,24 +234,16 @@ sendingForm.addEventListener("submit",(e) => {
   let regCode = /^[0-9]{4,6}$/;
   let regAddress = /[0-9] [a-zA-Z]/;
   
-  if(regCode.test(inputCode.value) == false) {
+  if(regCode.test(inputCode.value) && regMail.test(inputMail.value) && regAddress.test(inputAddress.value) && regText.test(inputName.value) && regText.test(inputName1.value)== false) {
     alert("Champs manquants ou invalide");
     return false;
     
-    } else if (regMail.test(inputMail.value) ==false) {
-      return false;
-    } else if (regAddress.test(inputAddress.value) ==false) {
-      return false;
-    } else if (regText.test(inputName.value) ==false) {
-      return false;
-    } else if (regText.test(inputName1.value) ==false) {
-      return false; 
     } else {
-      sendForm();
-      return true;
-
-    }
-});
+      
+    sendForm();
+    return true;
+  }
+})
 
 async function sendForm() {
   try {
@@ -258,7 +254,7 @@ let contact = {
   address:  inputAddress.value,
   email:  inputMail.value,
   city:  inputCity.value,
- };
+};
 
 localStorage.setItem("contact", JSON.stringify(contact));
 
@@ -270,29 +266,26 @@ for (let i = 0; i< myCart.length; i++) {
   products.push(myCart[i]._id);
   localStorage.setItem("id", products);
 }
-console.log(contact);
-console.log(products);
 
-    let send = JSON.stringify({"contact": contact,
-    "products": products});
-    let response = await fetch("http://localhost:3000/api/teddies/order", {
+let send = JSON.stringify({"contact": contact,
+                           "products": products});
+let response = await fetch("http://localhost:3000/api/teddies/order", {
       method: "POST",
       headers: {
         "content-type": "application/json"
               },
       body:  send,
-    });
+});
     
-    if (response.ok) {
+if (response.ok) {
     
-      window.location.href = "confirm.html";
-      localStorage.setItem("data", contact, products);
-      console.log(response);
-    } else {
+  window.location.href = "confirm.html";
+  localStorage.setItem("data", contact, products);
+  console.log(response);
+  } else {
       console.log ("err");
-           }
-    } catch (e) {
-      console.log(e);
-                }
+          }
+  } catch (e) {
+    console.log(e);
+          }
 }
-   //FONCTION DE RECUPERATION DES DONNES POUR FETCH POST VERS PAGE CONFIRMATION
