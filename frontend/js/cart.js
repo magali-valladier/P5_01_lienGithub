@@ -224,7 +224,7 @@ sendingForm.addEventListener("submit",(e) => {
   let regCode = /^[0-9]{4,6}$/;
   let regAddress = /[0-9] [a-zA-Z]/;
   
-  if(regCode.test(inputCode.value) && regMail.test(inputMail.value) && regAddress.test(inputAddress.value) && regText.test(inputName.value) && regText.test(inputName1.value)== false) {
+  if(regCode.test(inputCode.value)== false && regMail.test(inputMail.value)== false && regAddress.test(inputAddress.value)== false && regText.test(inputName.value)== false && regText.test(inputName1.value)== false) {
     alert("Champs manquants ou invalide");
     return false;
     
