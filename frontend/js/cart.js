@@ -254,9 +254,9 @@ let products = [];
 for (let i = 0; i< myCart.length; i++) {
 
   products.push(myCart[i]._id);
-  localStorage.setItem("id", products);
+  localStorage.setItem("id", JSON.stringify(products));
 }
-
+console.log(products);
 let send = JSON.stringify({"contact": contact,
                            "products": products});
 let response = await fetch("http://localhost:3000/api/teddies/order", {
@@ -270,7 +270,6 @@ let response = await fetch("http://localhost:3000/api/teddies/order", {
 if (response.ok) {
     
   window.location.href = "confirm.html";
-  localStorage.setItem("data", contact, products);
   console.log(response);
   } else {
       console.log ("err");
