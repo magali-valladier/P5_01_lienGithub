@@ -47,7 +47,7 @@ for(let j = 0; j < 5; j++){
   optionQty.setAttribute("value", j);
   qty.appendChild(optionQty);
   optionQty.textContent = j;
-  }
+}
 
 // CREATION D'UNE FONCTION D'ECOUTE DU CHANGEMENT DE LA QUANTITE POUR CALCUL PRIX TOTAL
 let tedQty = document.getElementById(myCart[i]._id);
@@ -57,20 +57,18 @@ let tedQty = document.getElementById(myCart[i]._id);
 tedQty.addEventListener("change", function choice () {
 
   let ttcPrice = this.value;
- let ttc = myCart[i].price * ttcPrice;
+  let ttc = myCart[i].price * ttcPrice;
   let totalCart = localStorage.getItem("price");
   let total = JSON.parse(totalCart);
 
-// on ajoute le prix total dans le localstorage pour récupérer la valeur dans la page confirm.html
+// on vide le panier puis on ajoute le prix total dans le localstorage pour récupérer la valeur dans la page confirm.html
 
- if (totalCart === null){
-  total = [];
-  console.log(total);
- }
+ total = [];
+
  total.push(ttc);
  localStorage.setItem("price",JSON.stringify(total));
 });
-}   
+} 
 //CREATION DU BOUTON SUPPRIMER MON PANIER
 
 let deleteBtn = document.createElement("button");
@@ -212,28 +210,60 @@ let buttonForm = document.createElement("button");
   buttonForm.setAttribute("type", "submit");
   buttonForm.textContent = "Valider ma commande"; 
   
-// FONCTION POST POUR ENVOI FORMULAIRE
+//on vérifie que les données saisies sont correctes
+
 let sendingForm = document.getElementById("form");
 sendingForm.addEventListener("submit",(e) => {
-
-//on vérifie que les données saisies sont correctes
 
   e.preventDefault();
   let regText = /[a-zA-ZÀ-ÿ]/;
   let regMail = /[a-z0-9._%+-]+@[a-z0-9.-]+[.][a-z]{2,4}/;
   let regCode = /^[0-9]{4,6}$/;
   let regAddress = /[0-9] [a-zA-Z]/;
-  
-  if(regCode.test(inputCode.value)== false && regMail.test(inputMail.value)== false && regAddress.test(inputAddress.value)== false && regText.test(inputName.value)== false && regText.test(inputName1.value)== false) {
-    alert("Champs manquants ou invalide");
+  let testRegex = true;
+  let stringTestFalse = " ";
+  if(regCode.test(inputCode.value)== false) {
+
+  console.log("Champ code postal invalide !");
+  testRegex = false;
+
+  }
+
+  if(regAddress.test(inputAddress.value)== false) {
+
+    stringTestFalse = stringTestFalse + "champs adresse invalide\n ";
+    testRegex = false;
+    }
+
+  if(regMail.test(inputMail.value)== false) {
+
+    stringTestFalse = stringTestFalse + "champs mail invalide\n ";
+    testRegex = false;
+    }
+
+  if(regText.test(inputName.value)== false) {
+
+    stringTestFalse = stringTestFalse + "champs nom invalide\n ";
+    testRegex = false;
+    }
+
+  if(regText.test(inputName1.value)== false) {
+
+    stringTestFalse = stringTestFalse + "champs prenom invalide\n ";
+    testRegex = false;
+    }
+
+  if(testRegex == false) {
+
+    alert(stringTestFalse);
     return false;
-    
-    } else {
-      
+  } else {
     sendForm();
     return true;
   }
 })
+
+// FONCTION POST POUR ENVOI FORMULAIRE
 
 async function sendForm() {
   try {
@@ -277,4 +307,4 @@ if (response.ok) {
   } catch (e) {
     console.log(e);
           }
-}
+ }
